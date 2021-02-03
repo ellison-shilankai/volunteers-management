@@ -13,7 +13,11 @@ app.get('/api', (req, res) => {
 })
 
 app.post('/users', (req, res) => {
-  console.log(req)
+  console.log(req.body)
+  res.send({
+    code: 200,
+    data: req.body
+  })
 })
 
 app.listen(3000, () => console.log('Server has been started on port 3000'))
