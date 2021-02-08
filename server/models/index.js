@@ -23,6 +23,6 @@ fs.readdirSync(__dirname)
 db.Sequelize = Sequelize
 db.sequelize = sequelize
 // db.User = User
-console.log(db)
+// console.log(db)
 
 module.exports = db
