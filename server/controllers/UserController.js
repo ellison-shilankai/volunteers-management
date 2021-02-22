@@ -1,11 +1,23 @@
 const { User } = require('../models')
+const config = require('../config')
+const Jwt = require('jsonwebtoken')
+
+function tokenSign ({ id, email }) {
+  try {
+    return Jwt.sign({ id, email }, config.token.secreOrPrivateKey, config.token.options)
+    // res.status()
+  } catch (error) {
+    console.log(error)
+  }
+}
 
 module.exports = {
   async register (req, res) {
     try {
       const user = await User.create(req.body)
       res.status(201).send({
-        user
+        user,
+        token: tokenSign(user)
       })
     } catch (error) {
       res.status(400).send({
@@ -70,6 +82,34 @@ module.exports = {
       res.status(500).send({
         code: 500,
         error: '数据删除失败'
+      })
+    }
+  },
+  async login (req, res) {
+    try {
+      const user = await User.findOne({
+        where: {
+          email: req.body.email
+        }
+      })
+      if (user) {
+        const isValidPassword = user.comparePassword(req.body.password)
+        if (isValidPassword) {
+          res.send({
+            user: user.toJSON(),
+            token: tokenSign(user)
+          })
+        }
+      } else {
+        res.status(403).send({
+          code: 403,
+          error: '用户名或密码错误'
+        })
+      }
+    } catch (error) {
+      res.status(403).send({
+        code: 403,
+        error: '用户名或密码错误'
       })
     }
   }

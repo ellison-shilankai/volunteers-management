@@ -14,5 +14,11 @@ module.exports = {
         paranoid: true
       }
     }
+  },
+  token: {
+    secreOrPrivateKey: 'volunteers',
+    options: {
+      expiresIn: '24h'
+    }
   }
 }
