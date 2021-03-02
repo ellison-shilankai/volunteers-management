@@ -1,12 +1,18 @@
 <template>
-  <div class='login'>
+  <div class="login">
     <h3>志愿者登录</h3>
-    <el-form ref="LoginForm" :rules='rules' :model="LoginForm" class='loginContainer'>
-      <el-form-item label="用户名" prop="username">
+    <el-form
+      ref="LoginForm"
+      :rules="rules"
+      :model="LoginForm"
+      class="loginContainer"
+    >
+      <div class="login-error">{{ this.error }}</div>
+      <el-form-item label="邮箱" prop="email">
         <el-input
           type="text"
           auto-complete="false"
-          v-model="LoginForm.username"
+          v-model="LoginForm.email"
           placeholder="请输入用户名"
         ></el-input>
       </el-form-item>
@@ -18,53 +24,76 @@
           placeholder="请输入密码"
         ></el-input>
       </el-form-item>
-      <el-form-item pro="code">
+      <!-- <el-form-item pro="code">
         <el-input
           type="text"
           auto-complete="false"
           v-model="LoginForm.code"
           placeholder="点击图片更换验证码"
-          style="width:240px; margin-right: 5px"
+          style="width: 240px; margin-right: 5px"
         ></el-input>
         <img :src="captchaUrl" />
-      </el-form-item>
-      <el-checkbox v-model="checked">记住我</el-checkbox>
-      <el-button type="primary" class="btn-bolck" @click="submitLogin">登录</el-button>
+      </el-form-item> -->
+      <el-button type="primary" class="btn-bolck" @click="submitLogin" :loading="loading"
+        >登录</el-button
+      >
+      <div class="login-info">如果没有册账号请<router-link :to="{name: 'Register'}">点击注册</router-link></div>
     </el-form>
   </div>
 </template>
 
 <script>
+import UserService from "@/utils/services/userService";
+
 export default {
   name: "Login",
   data() {
     return {
-      captchaUrl: '',
+      error: '',
+      captchaUrl: "",
+      loading: false,
       LoginForm: {
-        username: "admin",
-        password: "123456",
-        code: "",
+        email: "1067168009@qq.com",
+        password: "12345678",
+        // code: "",
       },
       checked: true,
       rules: {
-        username: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        password: [{ required: true, message: '请输入用户名', trigger: 'blur' }],
-        code:  [{ required: true, message: '请输入用户名', trigger: 'blur' }]
-      }
+        email: [
+          { type: 'email', required: true, message: "请输入邮箱", trigger: "blur" },
+        ],
+        password: [
+          { type: 'string', required: true, message: "请输入密码", trigger: "blur" },
+        ],
+        // code: [{ required: true, message: "请输入用户名", trigger: "blur" }],
+      },
     };
   },
   methods: {
     submitLogin() {
-      this.$refs.LoginForm.validate((valid) => {
-          if (valid) {
-            alert('submit!');
-          } else {
-            this.$message.error('请输入正确的账号密码');
-            return false;
+      this.$refs.LoginForm.validate(async (valid) => {
+        if (valid) {
+          this.loading = true;
+          try {
+            const response = await UserService.login({
+              email: this.LoginForm.email,
+              password: this.LoginForm.password,
+            });
+            if (response.data.code !== 200) {
+              this.error = response.data.error;
+            } else {
+              // TODO:将用户信息和token保存到vuex
+              this.$router.push("/");
+            }
+            this.loading = false;
+          } catch (error) {
+            this.error = "登录失败，请重新登陆";
+            this.loading = false;
           }
-        });
-    }
-  }
+        }
+      });
+    },
+  },
 };
 </script>
 
