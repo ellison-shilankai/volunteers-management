@@ -16,11 +16,13 @@ export default new Router({
     // },
     {
       path: '/users/login',
+      alias: '/login',
       name: 'Login',
       component: Login
     },
     {
       path: '/users/register',
+      alias: '/register',
       name: 'Register',
       component: Register
     }

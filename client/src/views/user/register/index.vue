@@ -7,20 +7,20 @@
       class="register-form"
       :rules="registerRules"
     >
-      <div class="register-error">{{ this. error }}</div>
+      <div class="register-error text-center">{{ this. error }}</div>
       <el-form-item prop="email" label="邮箱">
         <el-input v-model="registerForm.email"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input
-          type="string"
+          type="password"
           v-model="registerForm.password"
           autocomplete="off"
         ></el-input>
       </el-form-item>
       <el-form-item label="确认密码" prop="comparePassword">
         <el-input
-          type="string"
+          type="password"
           v-model="registerForm.comparePassword"
         ></el-input>
       </el-form-item>
@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import UserService from "@/utils/services/userService";
+import Api from "@/api/index";
 
 export default {
   name: "Register",
@@ -49,9 +49,9 @@ export default {
       loading: false,
       error: "",
       registerForm: {
-        email: "",
-        password: "",
-        comparePassword: "",
+        email: "1067168009@qq.com",
+        password: "12345678",
+        comparePassword: "12345678",
       },
       registerRules: {
         email: {
@@ -90,21 +90,41 @@ export default {
         if (valid) {
           this.loading = true;
           this.error = "";
-          try {
-            const response = await UserService.register({
+          try { 
+            const response = await Api.register({
               email: this.registerForm.email,
               password: this.registerForm.password,
             });
             if (response.data.code !== 200) {
-              this.error = response.data.error;
+              this.$message({
+                showClose: true,
+                message: response.data.error,
+                type: 'error',
+                center: true
+              });
             } else {
-              // TODO:将用户信息和token保存到vuex
+              this.$storestore.dispatch('setToken', response.data.token)
               this.$router.push("/");
             }
             this.loading = false;
           } catch (error) {
+            // console.log(error)
+            if(error.response.data.error) {
+              this.$message({
+                showClose: true,
+                message: error.response.data.error,
+                type: 'error',
+                center: true
+              });
+            }else {
+              this.$message({
+                showClose: true,
+                message:  "注册失败，请稍后重试",
+                type: 'error',
+                center: true
+              });
+            }
             this.loading = false;
-            this.error = "注册失败，请稍后重试";
           }
         }
       });

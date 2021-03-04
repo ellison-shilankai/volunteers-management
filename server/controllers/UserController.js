@@ -17,13 +17,23 @@ module.exports = {
       const user = await User.create(req.body)
       res.status(201).send({
         code: 200,
-        user,
+        user: {
+          email: user.email,
+          id: user.id
+        },
         // token: tokenSign(user)
       })
     } catch (error) {
+      console.log(error)
+      let err = []
+      if(error.errors) {
+        error.errors.forEach(validateError => {
+          err.push(validateError.message)
+        })
+      }
       res.status(400).send({
         code: 400,
-        error: '该邮箱已经注册'
+        error: err.join(' ')
       })
     }
   },
@@ -98,20 +108,29 @@ module.exports = {
         if (isValidPassword) {
           res.send({
             code: 200,
-            user: user.toJSON(),
+            user: {
+              email: user.email,
+              id: user.id
+            },
             token: tokenSign(user)
+          })
+        } else {
+          res.status(403).send({
+            code: 403,
+            error: '请输入正确密码'
           })
         }
       } else {
         res.status(403).send({
           code: 403,
-          error: '用户名或密码错误'
+          error: '请输入正确的用户名'
         })
       }
     } catch (error) {
+      console.log(error)
       res.status(403).send({
         code: 403,
-        error: '用户名或密码错误'
+        error: '登录失败，请重新登陆'
       })
     }
   }

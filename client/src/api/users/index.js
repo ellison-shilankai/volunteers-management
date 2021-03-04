@@ -1,5 +1,5 @@
-import request from '../api'
-
+import axios from 'axios';
+const request = axios.create()
 export default {
   // async getUserById () {
   //   const response = await request.get('/users/3')

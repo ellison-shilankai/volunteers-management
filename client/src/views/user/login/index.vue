@@ -7,7 +7,7 @@
       :model="LoginForm"
       class="loginContainer"
     >
-      <div class="login-error">{{ this.error }}</div>
+      <div class="login-error text-center">{{ this.error }}</div>
       <el-form-item label="邮箱" prop="email">
         <el-input
           type="text"
@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import UserService from "@/utils/services/userService";
+import Api from "@/api/index";
+import { mapActions } from "vuex";
 
 export default {
   name: "Login",
@@ -70,24 +71,46 @@ export default {
     };
   },
   methods: {
+    ...mapActions(["setToken", "setUser"]),
     submitLogin() {
       this.$refs.LoginForm.validate(async (valid) => {
         if (valid) {
           this.loading = true;
           try {
-            const response = await UserService.login({
+            const response = await Api.login({
               email: this.LoginForm.email,
               password: this.LoginForm.password,
-            });
+            }); 
             if (response.data.code !== 200) {
-              this.error = response.data.error;
+              // this.error = response.data.error;
+              this.$message({
+                showClose: true,
+                message: error.response.data.error,
+                type: 'error',
+                center: true
+              });
             } else {
-              // TODO:将用户信息和token保存到vuex
+              this.$store.dispatch('setToken', response.data.token)
+              this.$store.dispatch('setUser', response.data.user)
               this.$router.push("/");
             }
             this.loading = false;
           } catch (error) {
-            this.error = "登录失败，请重新登陆";
+            if(error.response.data.error) {
+              this.$message({
+                showClose: true,
+                message: error.response.data.error,
+                type: 'error',
+                center: true
+              });
+            }else {
+              this.$message({
+                showClose: true,
+                message: "登录失败，请重新登陆",
+                type: 'error',
+                center: true
+              });
+            }
             this.loading = false;
           }
         }
