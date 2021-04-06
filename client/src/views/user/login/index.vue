@@ -24,6 +24,11 @@
           placeholder="请输入密码"
         ></el-input>
       </el-form-item>
+      <el-radio-group v-model="LoginForm.status">
+        <el-radio label="volunteer">志愿者</el-radio>
+        <el-radio label="organizer">组织</el-radio>
+        <el-radio label="admin">管理员</el-radio>
+      </el-radio-group>
       <!-- <el-form-item pro="code">
         <el-input
           type="text"
@@ -56,6 +61,7 @@ export default {
       LoginForm: {
         email: "1067168009@qq.com",
         password: "12345678",
+        status: ''
         // code: "",
       },
       checked: true,
@@ -80,18 +86,19 @@ export default {
             const response = await Api.login({
               email: this.LoginForm.email,
               password: this.LoginForm.password,
+              status: this.LoginForm.status,
             }); 
             if (response.data.code !== 200) {
               // this.error = response.data.error;
               this.$message({
                 showClose: true,
-                message: error.response.data.error,
+                message: response.data.error,
                 type: 'error',
                 center: true
               });
             } else {
               this.$store.dispatch('setToken', response.data.token)
-              this.$store.dispatch('setUser', response.data.user)
+              this.$store.dispatch('setUser', response.data.user) 
               this.$router.push("/");
             }
             this.loading = false;

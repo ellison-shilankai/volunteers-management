@@ -12,9 +12,16 @@ module.exports = (sequelize, DataTypes) => {
     comparePassword (password) {
       return this.password === MD5(password).toString()
     }
+    compareStatus (status) {
+      return this.status === status
+    }
   }
   Model.init({
     // 在这里定义模型属性
+    name: {
+      type: DataTypes.STRING,
+      defaultValue: "Jack"
+    },
     email: {
       type: DataTypes.STRING,
       unique: {
@@ -33,7 +40,11 @@ module.exports = (sequelize, DataTypes) => {
           msg: '密码长度必须大于6小于18'
         }
       }
-    }
+    },
+    status: {
+      type: DataTypes.STRING,
+      defaultValue: "volunteer"
+    },
   },
   // 这是其他模型参数
   {

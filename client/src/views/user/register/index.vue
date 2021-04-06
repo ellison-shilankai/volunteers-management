@@ -24,6 +24,11 @@
           v-model="registerForm.comparePassword"
         ></el-input>
       </el-form-item>
+      <el-radio-group v-model="registerForm.status">
+        <el-radio label="volunteer">志愿者</el-radio>
+        <el-radio label="organizer">组织</el-radio>
+        <el-radio label="admin">管理员</el-radio>
+      </el-radio-group>
       <el-form-item class="m22">
         <el-button type="primary" @click="register()" :loading="loading"
           >提交</el-button
@@ -52,6 +57,7 @@ export default {
         email: "1067168009@qq.com",
         password: "12345678",
         comparePassword: "12345678",
+        status: ''
       },
       registerRules: {
         email: {
@@ -84,8 +90,11 @@ export default {
       },
     };
   },
+  created () {
+  },
   methods: {
     register() {
+      console.log(this.registerForm.status)
       this.$refs["registerForm"].validate(async (valid) => {
         if (valid) {
           this.loading = true;
@@ -94,6 +103,7 @@ export default {
             const response = await Api.register({
               email: this.registerForm.email,
               password: this.registerForm.password,
+              status: this.registerForm.status
             });
             if (response.data.code !== 200) {
               this.$message({
@@ -103,12 +113,11 @@ export default {
                 center: true
               });
             } else {
-              this.$storestore.dispatch('setToken', response.data.token)
-              this.$router.push("/");
+              this.$store.dispatch('setToken', response.data.token)
+              this.$router.push("/users/login");
             }
             this.loading = false;
           } catch (error) {
-            // console.log(error)
             if(error.response.data.error) {
               this.$message({
                 showClose: true,

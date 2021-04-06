@@ -1,7 +1,31 @@
+body,
+ol,
+ul,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+th,
+td,
+dl,
+dd,
+form,
+fieldset,
+legend,
+input,
+textarea,
+select {
+  margin: 0;
+  padding: 0
+}
+
 body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-family: PingFangSC-Regular,PingFang SC;
+  font-family: PingFangSC-Regular, PingFang SC;
   overflow-x: hidden;
   margin: 0;
   color: #313131;
@@ -9,13 +33,35 @@ body {
   font-size: 16px;
 }
 
+html,
+body,
+#app {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+li {
+  list-style: none
+}
+
+img {
+  border: 0;
+  vertical-align: middle
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0
+}
+
 a {
   text-decoration: none;
 }
 
-p{
-  margin:0;
-  padding:0;
+p {
+  margin: 0;
+  padding: 0;
 }
 
 .clearfix:after {
@@ -41,13 +87,13 @@ p{
 }
 
 .text-overflow {
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 @mixin text-overflow-multi($line) {
-  overflow : hidden;
+  overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: $line;
@@ -58,29 +104,33 @@ p{
 .color-primary {
   color: $primary-color;
 }
+
 .red {
   color: #ff5353;
 }
+
 .dark {
   color: #2b333b;
 }
+
 .grey {
   color: #b0bdc9;
 }
+
 .grey-medium {
   color: #71777D !important;
 }
 
 //line
-.line-gray{
-  width:100%;
-  height:rem(8);
-  background:#F5F5F5;
+.line-gray {
+  width: 100%;
+  height: rem(8);
+  background: #F5F5F5;
 }
 
 //richtext
-.richtext{
-  img{
+.richtext {
+  img {
     max-width: 100%;
   }
 }

@@ -18,10 +18,12 @@ module.exports = {
       res.status(201).send({
         code: 200,
         user: {
+          name: user.name,
           email: user.email,
-          id: user.id
+          id: user.id,
+          status: user.status
         },
-        // token: tokenSign(user)
+        token: tokenSign(user)
       })
     } catch (error) {
       console.log(error)
@@ -105,12 +107,15 @@ module.exports = {
       })
       if (user) {
         const isValidPassword = user.comparePassword(req.body.password)
-        if (isValidPassword) {
+        const isStatus = user.compareStatus(req.body.status)
+        if (isValidPassword && isStatus) {
           res.send({
             code: 200,
             user: {
+              name: user.name,
               email: user.email,
-              id: user.id
+              id: user.id,
+              status: user.status
             },
             token: tokenSign(user)
           })
