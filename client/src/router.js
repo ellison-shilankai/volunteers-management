@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Login from './views/user/login/index.vue'
 import Register from './views/user/register/index.vue'
 import Index from '@/views/index'
+import Activity from '@/views/activities'
+import Organization from '@/views/org'
 import Home from '@/components/Home.vue'
 import Welcome from '@/components/Welcome.vue'
 import Users from '@/components/user/Users.vue'
@@ -20,8 +22,25 @@ export default new Router({
       path: '/',
       name: 'index',
       component: Index,
+      meta: {
+        keepAlive: true
+      }
     },
-
+    {
+      path: '/activities',
+      // name: 'activity',
+      component: Activity,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/org',
+      component: Organization,
+      meta: {
+        keepAlive: true
+      }
+    },
     {
       path: '/home',
       name: 'home',
@@ -35,17 +54,24 @@ export default new Router({
         // { path: '/categories', component: GoodsCate }
       ]
     },
+    //注册登录
     {
       path: '/users/login',
       alias: '/login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        keepAlive: false
+      }
     },
     {
       path: '/users/register',
       alias: '/register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: {
+        keepAlive: false
+      }
     }
   ]
 })

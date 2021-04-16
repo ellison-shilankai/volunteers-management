@@ -2,7 +2,13 @@
 @import './global.scss';
 // @import '../fonts/iconfont.css';
 
+//components
+@import './components/activities/index.scss';
+
 //view
+@import './views/activities/index.scss';
+@import './views/header/index.scss';
 @import './views/users/login/index.scss';
 @import './views/users/register/index.scss';
 @import './views/index/index.scss';
+@import './views/org/index.scss';
