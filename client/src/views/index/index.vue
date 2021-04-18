@@ -20,6 +20,7 @@
 <script>
 import { mapState } from 'vuex';
 export default {
+  name: 'index',
   data(){
     return {
       // carousel_img: ['@/assets/images/carousel-1.jpg', '@/assets/images/carousel-2.jpg'],

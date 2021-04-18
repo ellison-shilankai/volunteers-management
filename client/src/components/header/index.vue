@@ -32,7 +32,7 @@
           <li
             class="header-ul-li"
             id="information-li"
-            onClick="window.location.href='/web/information'"
+            onClick="window.location.href='/news'"
           >
             资讯
           </li>

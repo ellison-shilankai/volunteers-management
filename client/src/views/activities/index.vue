@@ -19,36 +19,22 @@
     <div class="activity-list">
       <e-activity></e-activity>
     </div>
-    <div class="pagination">
-      <div class="block">
-        <!-- <span class="demonstration">完整功能</span> -->
-        <el-pagination
-          @size-change="handleSizeChange"
-          @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[10, 20, 30, 40]"
-          :page-size="10"
-          layout="total, sizes, prev, pager, next, jumper"
-          :total="400"
-        >
-        </el-pagination>
-      </div>
-    </div>
+    <Pagination/>
   </div>
 </template>
 
 <script>
 import eActivity from "@/components/activities/e-activity";
+import Pagination from "@/components/pagination";
 export default {
+  name:'activities',
   components: {
     eActivity,
+    Pagination,
   },
   data() {
     return {
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
+      currentPage4: 5,
       // activities: [
       //   {
       //     img: "http://image.zyh365.com/vms/2021/27//1617067638973ccc9ba0d8b064aa7bb9c263f294a3868?imageView2/2/w/400/h/270",
@@ -65,12 +51,7 @@ export default {
     console.log(this.activities);
   },
   methods: {
-    handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
-    },
-    handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
-    },
+    
   },
 };
 </script>

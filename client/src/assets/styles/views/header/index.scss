@@ -1,5 +1,6 @@
 .el-header {
   padding-top: 13px;
+  padding-bottom: 30px;
   width: 100%;
   box-shadow: 0px 0px 5px rgba(220, 221, 221, 1);
 
@@ -42,4 +43,8 @@
       border-bottom: 4px solid #5ec16b !important;
     }
   }
+}
+
+.el-container {
+  margin-bottom: 30px;
 }

@@ -10,7 +10,7 @@
         </el-input>
     </div>
     <div class="org-list" >
-      <div class="org-list-item" v-for="(org, index) of orgs"
+      <div class="org-list-item" v-for="(org, index) in orgs"
       :key="index">
         <div class="org-list-item-content">
           <div class="org-list-item-content-img">
@@ -24,11 +24,17 @@
         <div class="org-list-item-other"></div>
       </div>
     </div>
+    <Pagination/>
   </div>
 </template>
 
 <script>
+import Pagination from "@/components/pagination";
 export default {
+  name: 'org',
+  components: {
+    Pagination,
+  },
   data() {
     return {
       input: "",

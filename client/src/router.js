@@ -5,6 +5,7 @@ import Register from './views/user/register/index.vue'
 import Index from '@/views/index'
 import Activity from '@/views/activities'
 import Organization from '@/views/org'
+import News from '@/views/news'
 import Home from '@/components/Home.vue'
 import Welcome from '@/components/Welcome.vue'
 import Users from '@/components/user/Users.vue'
@@ -37,6 +38,13 @@ export default new Router({
     {
       path: '/org',
       component: Organization,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/news',
+      component: News,
       meta: {
         keepAlive: true
       }
