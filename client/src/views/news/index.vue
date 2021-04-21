@@ -8,13 +8,13 @@
         <div class="news-list-box-right">
           <div class="news-list-box-right-h3">{{news.title}}</div>
           <div class="news-list-box-right-p">{{news.introduce}}</div>
-          <div class="news-list-box-right-time">{{news.time}}</div>
+          <div class="news-list-box-right-time"></div>
         </div>
       </div>
     </div>
     <div class="news-relevant" >
       <div class="news-relevant-h3">相关资讯</div>
-      <div class="news-relevant-item" v-for="(news, index) in news.slice(0,3)"   :key="index">
+      <div class="news-relevant-item" v-for="(news, index) in news_title"   :key="index">
         {{news.title}}
       </div>
     </div>
@@ -23,6 +23,7 @@
 </template>
 
 <script>
+import Api from "@/api/index";
 import Pagination from "@/components/pagination";
 export default {
   name: 'news',
@@ -31,39 +32,24 @@ export default {
   },
   data() {
     return {
-      news:[
-        {
-          img: 'http://image.zyz.org.cn/admin/information/o_1deqp9va910rb11rbq901mjqjig.jpg?imageView2/2/w/270/h/190',
-          title: '寸草心爱老敬老行动',
-          introduce: '爱老敬老是中华民族的传统美德，也是青年志愿服务工作重要内容。',
-          time: '2019-07-03 10:29:52'
-        },
-        {
-          img: 'http://image.zyz.org.cn/admin/information/o_1deqp9va910rb11rbq901mjqjig.jpg?imageView2/2/w/270/h/190',
-          title: '寸草心爱老敬老行动2',
-          introduce: '爱老敬老是中华民族的传统美德，也是青年志愿服务工作重要内容。',
-          time: '2019-07-03 10:29:52'
-        },
-        {
-          img: 'http://image.zyz.org.cn/admin/information/o_1deqp9va910rb11rbq901mjqjig.jpg?imageView2/2/w/270/h/190',
-          title: '寸草心爱老敬老行动3',
-          introduce: '爱老敬老是中华民族的传统美德，也是青年志愿服务工作重要内容。',
-          time: '2019-07-03 10:29:52'
-        },
-        {
-          img: 'http://image.zyz.org.cn/admin/information/o_1deqp9va910rb11rbq901mjqjig.jpg?imageView2/2/w/270/h/190',
-          title: '寸草心爱老敬老行动',
-          introduce: '爱老敬老是中华民族的传统美德，也是青年志愿服务工作重要内容。',
-          time: '2019-07-03 10:29:52'
-        },
-      ],
-      info: {
-        title: {
-
-        }
-      }
+      news: null,
+      new_title: null,
     }
-  }
+  },
+  computed: {
+    news_title: function(){
+      return this.news && this.news.slice(0, 3)
+    }
+  },
+  async created () {
+    this.news = await Api.getAllNew().then(res =>{
+      // res.data.count
+      this.$store.commit('SET_NEWS', res.data)
+      return res.data.info
+    })
+  },
+  methods: {
+   }
 };
 </script>
 

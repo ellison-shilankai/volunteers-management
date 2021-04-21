@@ -1,7 +1,7 @@
 const { User } = require('../models')
 const config = require('../config')
 const Jwt = require('jsonwebtoken')
-
+ 
 function tokenSign ({ id, email }) {
   try {
     return Jwt.sign({ id, email }, config.token.secreOrPrivateKey, config.token.options)

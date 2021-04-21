@@ -51,7 +51,7 @@
 import Api from "@/api/index";
 import { mapActions } from "vuex";
 
-export default {
+export default { 
   name: "Login",
   data() {
     return {
@@ -99,7 +99,7 @@ export default {
             } else {
               this.$store.dispatch('setToken', response.data.token)
               this.$store.dispatch('setUser', response.data.user) 
-              this.$router.push("/");
+              this.$router.push("/"); 
             }
             this.loading = false;
           } catch (error) {
