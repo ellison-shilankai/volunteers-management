@@ -9,7 +9,7 @@
         :page-sizes="[4, 8, 16, 32]"
         :page-size="4"
         layout="total, sizes, prev, pager, next, jumper"
-        :total="32"
+        :total= 100
       >
       </el-pagination>
     </div>
@@ -23,7 +23,16 @@ export default {
       currentPage: 4,
     }
   },
+  props: {
+    newsData: {
+      type: Object,
+      default: () => {}
+    }
+  },
+  created () {
+  },
   methods: {
+
     handleSizeChange(val) {
       console.log(`每页 ${val} 条`);
     },

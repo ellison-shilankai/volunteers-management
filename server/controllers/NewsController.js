@@ -29,7 +29,7 @@ module.exports = {
   },
   
   async find(req, res) {
-    const info = await News.findAll({ limit: 4 ,offset: 4})
+    const info = await News.findAll()
     // const SumInfo = await News.findAll({ offset: 4, limit: 4 })
     const {count} = await News.findAndCountAll()
     try {

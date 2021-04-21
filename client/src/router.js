@@ -6,6 +6,7 @@ import Index from '@/views/index'
 import Activity from '@/views/activities'
 import Organization from '@/views/org'
 import News from '@/views/news'
+import NewsContent from '@/views/news/content'
 import Home from '@/components/Home.vue'
 import Welcome from '@/components/Welcome.vue'
 import Users from '@/components/user/Users.vue'
@@ -47,7 +48,14 @@ export default new Router({
       component: News,
       meta: {
         keepAlive: true
-      }
+      },
+    },
+    {
+      path: '/news/content',
+      component: NewsContent,
+      meta: {
+        keepAlive: true
+      },
     },
     {
       path: '/home',
