@@ -20,6 +20,7 @@
         class="news-relevant-item"
         v-for="(news, index) in newsTitle"
         :key="index"
+        @click='skipContent(1, index)'
       >
         {{ news.title }}
       </div>

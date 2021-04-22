@@ -1,7 +1,7 @@
 <template>
   <div class="new-content">
     <h1>{{this.newsTitle}} </h1>
-    <div>
+    <div class="new-content-info">
       <img :src=this.newsContent>
     </div>
   </div>
