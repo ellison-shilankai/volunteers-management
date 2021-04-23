@@ -4,6 +4,11 @@ module.exports = (sequelize, DataTypes) => {
   class Model extends Sequelize.Model {}
   Model.init({
     // 在这里定义模型属性
+    // orgId: {
+    //   primaryKey: true,
+    //   type: DataTypes.BIGINT,
+    //   allowNull: false
+    // },
     name: {
       type: DataTypes.STRING
     },
@@ -16,30 +21,22 @@ module.exports = (sequelize, DataTypes) => {
     content: {
       type: DataTypes.STRING
     },
-    deadline: {
-      type: DataTypes.DATE
-    },
-    place: {
-      type: DataTypes.STRING
-    },
     tel: {
       type: DataTypes.STRING
     },
-    orgName: {
-      type: DataTypes.STRING
+    totalPeople: {
+      type: DataTypes.BIGINT,
+      defaultValue: 0
     },
-    status: {
-      type: DataTypes.STRING,
-      defaultValue: "招募中"
-    },
-    type: {
-      type: DataTypes.STRING
+    totalTime: {
+      type: DataTypes.DECIMAL,
+      defaultValue: '0'
     }
   },
   // 这是其他模型参数
   {
     sequelize, // 我们需要传递连接实例
-    modelName: 'Activities' // 我们需要选择模型名称
+    modelName: 'Org' // 我们需要选择模型名称
   }
   )
   return Model

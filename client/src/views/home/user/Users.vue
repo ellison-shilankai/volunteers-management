@@ -237,7 +237,7 @@ export default {
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
     },
-    async removeById(id) {
+    async removeById() {
       // const confirmResult = await this.$confirm(
       //   '此操作将永久删除该商品, 是否继续?',
       //   '提示',
