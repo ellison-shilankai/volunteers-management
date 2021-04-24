@@ -59,15 +59,28 @@ export default new Router({
     },
     {
       path: '/home',
-      name: 'home',
+      // name: 'home',
       component: Home,
       redirect: '/welcome',
+      meta: {
+        keepAlive: false
+      },
       children: [
-        { path: '/welcome', component: Welcome },
-        { path: '/users', component: Users },
-        // { path: '/roles', component: Roles },
-        { path: '/goods', component: GoodsList },
-        // { path: '/categories', component: GoodsCate }
+        { 
+          path: '/welcome', 
+          component: Welcome ,
+          meta: {
+            keepAlive: false
+          }
+        },
+        { 
+          path: '/users', 
+          component: Users ,
+          meta: {
+            keepAlive: false
+          }
+        },
+        
       ]
     },
     //注册登录

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+// import { mapState } from 'vuex';
 export default {
   name: 'index',
   data(){
@@ -33,9 +33,9 @@ export default {
     }
   },
   computed: {
-    ...mapState({
-      User: state => state.user
-    })
+    // ...mapState({
+    //   User: state => state.user
+    // })
   },
   created () {
   }

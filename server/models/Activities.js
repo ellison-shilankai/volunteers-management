@@ -34,6 +34,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     type: {
       type: DataTypes.STRING
+    },
+    time: {
+     type: DataTypes.DECIMAL,
     }
   },
   // 这是其他模型参数

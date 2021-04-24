@@ -1,6 +1,6 @@
 @import './variables.scss';
 @import './global.scss';
-// @import '../fonts/iconfont.css';
+@import '../fonts/iconfont.css';
 
 //components
 @import './components/activities/index.scss';
@@ -16,3 +16,4 @@
 @import './views/news/index.scss';
 @import './views/news/content/index.scss';
 @import './views/org/index.scss';
+@import './views/home/index.scss';

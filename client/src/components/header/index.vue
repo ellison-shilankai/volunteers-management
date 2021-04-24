@@ -1,5 +1,5 @@
 <template>
-    <el-header height="93px">
+    <el-header class="header" height="93px">
       <!-- <div class="header" style="background-color: ; color: "> -->
       <nav>
         <img
@@ -40,9 +40,9 @@
           <li
             class="header-ul-li"
             id="help-li"
-            onClick="window.location.href='/web/site/help'"
+            onClick="window.location.href='/home'"
           >
-            使用帮助
+            后台管理
           </li>
           <ul class="header-user">
             <li class="header-ul-li header-user-downlist">

@@ -31,6 +31,9 @@ module.exports = (sequelize, DataTypes) => {
         isEmail: true
       }
     },
+    tel: {
+      type: DataTypes.STRING,
+    },
     password: {
       type: DataTypes.STRING,
       validate: {
@@ -41,10 +44,13 @@ module.exports = (sequelize, DataTypes) => {
         }
       }
     },
+    time: {
+      type: DataTypes.DECIMAL,
+    },
     status: {
       type: DataTypes.STRING,
       defaultValue: "volunteer"
-    },
+    }
   },
   // 这是其他模型参数
   {

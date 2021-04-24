@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate'
 
 import * as getters from "./getters";
 import * as actions from "./actions";
@@ -14,6 +15,7 @@ const state = {
   isUserLogin: false
 };
 
+
 export default new Vuex.Store({
   state,
   getters,
@@ -21,5 +23,6 @@ export default new Vuex.Store({
   mutations,
   modules: {
     news,
-  }
+  },
+  plugins: [createPersistedState()]//会自动保存创建的状态。刷新还在
 })

@@ -7,10 +7,11 @@
       </keep-alive>
     </el-container>
     <!-- Body -->
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
+    <!-- 底部 -->
     <footer-nav v-if="$route.meta.keepAlive"></footer-nav>
-    <!-- 登录页 -->
-    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 <script>

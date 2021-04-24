@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="userManagement">
     <!-- 面包屑导航区域 -->
-    <el-breadcrumb separator-class="el-icon-arrow-right">
+    <el-breadcrumb class="userManagement-nav" separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用户管理</el-breadcrumb-item>
       <el-breadcrumb-item>用户列表</el-breadcrumb-item>
@@ -110,6 +110,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
 export default {
   data() {
     // 验证邮箱的规则
@@ -208,8 +209,12 @@ export default {
       }
     }
   },
+  computed: {
+    ...mapState(['user', 'isUserLogin'])
+  },
   created() {
-    this.getUserList()
+    this.getUserList();
+    console.log(this.user)
   },
   methods: {
     async getUserList() {
