@@ -5,7 +5,7 @@ function hashPassword(user, options) {
     user.password = MD5(user.password).toString()
   }
 }
-
+ 
 module.exports = (sequelize, DataTypes) => {
   class Model extends Sequelize.Model {
     // 根据前端传过来的密码和数据库密码比较

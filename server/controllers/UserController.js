@@ -10,7 +10,7 @@ function tokenSign ({ id, email }) {
     console.log(error)
   }
 }
-
+ 
 module.exports = {
   async register (req, res) {
     try {
@@ -59,17 +59,40 @@ module.exports = {
       })
     }
   },
+  async getUserList (req, res) {
+    const userList = await User.findAll()
+    const {count} = await User.findAndCountAll()
+    try {
+      if (userList) {
+        res.status(200).send({
+          userList,
+          count
+        })
+      } else {
+        res.status(400).send({
+          code: 400,
+          error: '没有找到对应的数据'
+        })
+      }
+    } catch (error) {
+      res.status(500).send({
+        code: 500,
+        error: '数据查询失败'
+      })
+    }
+  },
   async update (req, res) {
     try {
       await User.update(
         req.body,
         {
           where: {
-            id: req.params.id
+            id: req.body.id
           }
         }
       )
       res.status(200).send({
+        data: req.body,
         message: '数据更新成功'
       })
     } catch (error) {

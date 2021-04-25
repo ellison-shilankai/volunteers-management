@@ -16,10 +16,11 @@ module.exports = (app) => {
     // AuthenticatePolicy.isValidToken,
     UserController.getUserById
   )
+  app.get('/users', UserController.getUserList)
   app.put('/users/:id', UserController.update)
   app.delete('/users/:id', UserController.delete)
   app.post('/users', UserController.register)
-
+  
   //组织
   app.post('/org', OrgController.create)
   app.get('/org', OrgController.find)

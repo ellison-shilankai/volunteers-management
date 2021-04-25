@@ -20,7 +20,6 @@
           <el-button
             type="primary"
             @click="addDialogVisible = true"
-            v-permission = "{action:'add'}"
           >添加用户</el-button>
         </el-col>
       </el-row>
@@ -28,10 +27,11 @@
       <!-- 用户列表区域 -->
       <el-table :data="userlist" border stripe>
         <el-table-column type="index"></el-table-column>
-        <el-table-column label="姓名" prop="username"></el-table-column>
+        <el-table-column label="姓名" prop="name"></el-table-column>
         <el-table-column label="邮箱" prop="email"></el-table-column>
-        <el-table-column label="电话" prop="mobile"></el-table-column>
-        <el-table-column label="角色" prop="role_name"></el-table-column>
+        <el-table-column label="电话" prop="tel"></el-table-column>
+        <el-table-column label="时长" prop="time"></el-table-column>
+        <el-table-column label="角色" prop="status"></el-table-column>
         <el-table-column label="状态">
           <template slot-scope="scope">
             <el-switch v-model="scope.row.mg_state"></el-switch>
@@ -43,15 +43,14 @@
             <el-button 
               type="primary" 
               icon="el-icon-edit" 
-              v-permission = "{action:'edit', effect: 'disabled'}"
-              size="mini">
+              size="mini"
+              @click="updateById(scope.row.id)">
             </el-button>
             <!-- 删除按钮 -->
             <el-button
               type="danger"
               icon="el-icon-delete"
               size="mini"
-              v-permission = "{action:'delete', effect: 'disabled'}"
               @click="removeById(scope.row.id)">
             </el-button>
             <!-- 分配角色按钮 -->
@@ -62,7 +61,6 @@
               :enterable="false">
               <el-button 
                 type="warning" 
-                v-permission = "{action:'edit', effect: 'disabled'}"
                 icon="el-icon-setting" 
                 size="mini">
               </el-button>
@@ -111,6 +109,7 @@
 
 <script>
 import { mapState } from "vuex";
+import Api from "@/api/index";
 export default {
   data() {
     // 验证邮箱的规则
@@ -214,10 +213,13 @@ export default {
   },
   created() {
     this.getUserList();
-    console.log(this.user)
   },
   methods: {
     async getUserList() {
+      const { data: res } = await Api.getUserList()
+      this.userlist = res.userList
+      this.total = res.count
+      console.log(res.userlist)
       // const { data: res } = await this.$http.get('users', {
       //   params: this.queryInfo
       // })
@@ -241,6 +243,14 @@ export default {
     // 监听添加用户对话框的关闭事件
     addDialogClosed() {
       this.$refs.addFormRef.resetFields()
+    },
+    async updateById(id) {
+      const data = await Api.updateUser({
+          id,
+          name: "小红",
+          tel: "110" 
+      })
+      console.log(data)
     },
     async removeById() {
       // const confirmResult = await this.$confirm(

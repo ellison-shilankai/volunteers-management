@@ -10,5 +10,11 @@ export default {
   },
   login (data) {
     return request.post('/users/login', data)
+  },
+  getUserList (data) {
+    return request.get('/users', data)
+  },
+  updateUser (data) {
+    return request.put('/users/:id', data)
   }
 }
