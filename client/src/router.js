@@ -12,7 +12,7 @@ import Welcome from '@/views/home/Welcome.vue'
 import Users from '@/views/home/user/Users.vue'
 // import Roles from '@/components/role/Roles.vue'
 // import GoodsCate from '@/components/goods/GoodsCate.vue'
-import GoodsList from '@/components/goods/GoodsList'
+
 
 Vue.use(Router)
 
@@ -75,6 +75,20 @@ export default new Router({
         },
         { 
           path: '/users', 
+          component: Users ,
+          meta: {
+            keepAlive: false
+          }
+        },
+        { 
+          path: '/home/activities', 
+          component: Users ,
+          meta: {
+            keepAlive: false
+          }
+        },
+        { 
+          path: '/org', 
           component: Users ,
           meta: {
             keepAlive: false

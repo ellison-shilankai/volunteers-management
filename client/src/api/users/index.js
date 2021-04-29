@@ -16,5 +16,11 @@ export default {
   },
   updateUser (data) {
     return request.put('/users/:id', data)
+  },
+  deleteUser (id) {
+    return request.delete(`/users/${id}`)
+  },
+  findUser(id) {
+    return request.get(`/users/${id}`)
   }
 }

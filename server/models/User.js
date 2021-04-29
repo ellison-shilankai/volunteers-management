@@ -39,7 +39,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: {
           min: 6,
-          max: 20,
+          max: 18,
           msg: '密码长度必须大于6小于18'
         }
       }

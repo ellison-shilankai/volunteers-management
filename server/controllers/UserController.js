@@ -39,6 +39,34 @@ module.exports = {
       })
     }
   },
+  // async findUser (req, res) {
+  //   try {
+  //     console.log(req.params.email)
+  //     const user = await User.findAll({
+  //       attributes: ['email'],
+  //       where: {
+  //         email: '1067168009@qq.com'
+  //       }
+  //     })
+  //     if (user) {
+  //       res.status(200).send({
+  //         user,
+  //         req
+  //       })
+  //     } else {
+  //       res.status(400).send({
+  //         code: 400,
+  //         error: '没有找到对应的数据'
+  //       })
+  //     }
+  //   } catch (error) {
+  //     res.status(500).send({
+  //       code: 500,
+  //       error: '数据查询失败',
+  //       req
+  //     })
+  //   }
+  // },
   async getUserById (req, res) {
     try {
       const user = await User.findByPk(req.params.id)
@@ -93,6 +121,7 @@ module.exports = {
       )
       res.status(200).send({
         data: req.body,
+        code: 200,
         message: '数据更新成功'
       })
     } catch (error) {
@@ -112,12 +141,14 @@ module.exports = {
         }
       )
       res.status(200).send({
+        code: 200,
         message: '数据删除成功'
       })
     } catch (error) {
       res.status(500).send({
         code: 500,
-        error: '数据删除失败'
+        error: '数据删除失败',
+        req
       })
     }
   },

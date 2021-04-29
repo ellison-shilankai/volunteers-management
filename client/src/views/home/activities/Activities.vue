@@ -6,8 +6,8 @@
       separator-class="el-icon-arrow-right"
     >
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-      <el-breadcrumb-item>用户列表</el-breadcrumb-item>
+      <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+      <el-breadcrumb-item>活动列表</el-breadcrumb-item>
     </el-breadcrumb>
 
     <!-- 卡片视图区域 -->
@@ -30,7 +30,7 @@
         </el-col>
         <el-col :span="4">
           <el-button type="primary" @click="addDialogVisible = true"
-            >添加用户</el-button
+            >添加活动</el-button
           >
         </el-col>
       </el-row>
@@ -117,26 +117,40 @@
         ref="addFormRef"
         label-width="80px"
       >
-        <el-form-item label="用户名" prop="name">
+        <el-form-item label="活动名称" prop="name">
           <el-input v-model="addForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="addForm.email"></el-input>
+        <el-form-item label="图片" prop="img">
+          <el-input v-model="addForm.img"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" prop="introduce">
+          <el-input v-model="addForm.introduce"></el-input>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <el-input v-model="addForm.content"></el-input>
+        </el-form-item>
+        <el-form-item label="截止日期" prop="deadline">
+          <el-input v-model="addForm.deadline"></el-input>
+        </el-form-item>
+        <el-form-item label="地址" prop="place">
+          <el-input v-model="addForm.place"></el-input>
         </el-form-item>
         <el-form-item label="手机" prop="tel">
           <el-input v-model="addForm.tel"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="addForm.password"></el-input>
+        <el-form-item label="组织名称" prop="orgName">
+          <el-input v-model="addForm.orgName"></el-input>
         </el-form-item>
         <el-form-item label="时长" prop="time">
           <el-input v-model="addForm.time"></el-input>
         </el-form-item>
+        <el-form-item label="类型" prop="type">
+          <el-input v-model="addForm.type"></el-input>
+        </el-form-item>
         <el-form-item label="权限">
           <el-radio-group v-model="addForm.status">
-            <el-radio label="volunteer">志愿者</el-radio>
-            <el-radio label="organizer">组织</el-radio>
-            <el-radio label="admin">管理员</el-radio>
+            <el-radio label="招募中"></el-radio>
+            <el-radio label="已结束"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -198,23 +212,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
 import Api from "@/api/index";
 export default {
-  name: 'Users',
+  name: 'Activities',
   data() {
-    // 验证邮箱的规则
-    var checkEmail = (rule, value, cb) => {
-      // 验证邮箱的正则表达式
-      const regEmail = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(\.[a-zA-Z0-9_-])+/;
-
-      if (regEmail.test(value)) {
-        // 合法的邮箱
-        return cb();
-      }
-
-      cb(new Error("请输入合法的邮箱"));
-    };
     // 验证手机号的规则
     var checkMobile = (rule, value, cb) => {
       // 验证手机号的正则表达式
@@ -235,27 +236,37 @@ export default {
         // 当前每页显示多少条数据
         pagesize: 5,
       },
-      userlist: [],
+      activitylist: [],
       total: 0,
       // 控制添加用户对话框的显示与隐藏
       addDialogVisible: false,
       editDialogVisible: false,
       // 添加用户的表单数据
       addForm: {
-        name: "张三",
-        password: "123456",
-        email: "admin@163.com",
+        name: "",
+        img: "",
+        introduce: "",
+        content: '',
+        deadline: '',
+        place: '',
         tel: "17888888888",
+        orgName: '',
         time: "2",
+        type: '',
         status: "",
       },
       editForm: {
         id: "",
         name: "",
-        password: "",
-        email: "",
-        tel: "",
-        time: "",
+        img: "",
+        introduce: "",
+        content: '',
+        deadline: '',
+        place: '',
+        tel: "17888888888",
+        orgName: '',
+        time: "2",
+        type: '',
         status: "",
       },
       // 添加表单的验证规则对象
@@ -273,20 +284,14 @@ export default {
             trigger: "blur",
           },
         ],
-        password: [
+        img: [
           {
-            required: true,
+            required: false,
             message: "请输入密码",
             trigger: "blur",
           },
-          {
-            min: 6,
-            max: 15,
-            message: "用户名的长度在6~18个字符之间",
-            trigger: "blur",
-          },
         ],
-        email: [
+        introduce: [
           {
             required: true,
             message: "请输入邮箱",
@@ -334,7 +339,6 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "isUserLogin"]),
   },
   created() {
     this.getUserList();

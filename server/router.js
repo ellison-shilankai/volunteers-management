@@ -12,10 +12,7 @@ module.exports = (app) => {
   // })
   //用户
   app.post('/users/login', UserController.login)
-  app.get('/users/:id', 
-    // AuthenticatePolicy.isValidToken,
-    UserController.getUserById
-  )
+  app.get('/users/:id', UserController.getUserById)
   app.get('/users', UserController.getUserList)
   app.put('/users/:id', UserController.update)
   app.delete('/users/:id', UserController.delete)

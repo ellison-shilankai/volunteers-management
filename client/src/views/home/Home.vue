@@ -28,14 +28,14 @@
                 <i class="el-icon-user"></i>
                 <span slot="title">用户管理</span>
               </template>
-              <el-menu-item class="pull-left-20" index="1-1" @click="toUser">用户列表</el-menu-item>
+              <el-menu-item class="pull-left-20" index="1-1" @click="toDestination('/users')">用户列表</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span slot="title">活动管理</span>
               </template>
-              <el-menu-item class="pull-left-20" index="2-1">活动列表</el-menu-item>
+              <el-menu-item class="pull-left-20" index="2-1" @click="toDestination('/home/activities')">活动列表</el-menu-item>
             </el-submenu>
             <el-menu-item index="3">
               <i class="el-icon-document"></i>
@@ -83,8 +83,8 @@ export default {
     toggleCollapse() {
       this.isCollapse = !this.isCollapse;
     },
-    toUser() {
-      this.$router.push('/users')
+    toDestination(path) {
+      this.$router.push(path)
     }
   },
 };
