@@ -2,10 +2,33 @@
   .userManagement-nav {
     margin-bottom: 20px;
   }
+  .el-dialog__footer {
+    text-align: center;
+  }
   &-title {
     margin-bottom: 15px;
+    // .userManagement-body {
+     
+    //   .limitNumber {
+    //     white-space: nowrap;
+    //   }
+    // }
+  }
+  &-body {
+    .el-table__body-wrapper {
+      .el-table--enable-row-transition .el-table__body td {
+        color: red;
+        .el-table .cell {
+          
+          white-space: nowrap;
+        }
+      } 
+      
+    }
+    
   }
   &-pagination {
     margin-top: 15px;
   }
+  
 }

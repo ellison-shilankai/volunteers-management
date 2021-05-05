@@ -16,21 +16,21 @@
       <el-row :gutter="20" class="userManagement-title">
         <el-col :span="8">
           <el-input
-            placeholder="请输入想要查询的邮箱"
+            placeholder="请输入想要查询的活动名称"
             v-model="queryInfo.query"
             clearable
-            @clear="findUser"
+            @clear="findActivity"
           >
             <el-button
               slot="append"
               icon="el-icon-search"
-              @click="findUser"
+              @click="findActivity"
             ></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
           <el-button type="primary" @click="addDialogVisible = true"
-            >添加活动</el-button
+            >创建活动</el-button
           >
         </el-col>
       </el-row>
@@ -38,7 +38,7 @@
       <!-- 用户列表区域 -->
       <el-table
         :data="
-          userlist.slice(
+          activityList.slice(
             (this.queryInfo.pagenum - 1) * this.queryInfo.pagesize,
             this.queryInfo.pagenum * this.queryInfo.pagesize
           )
@@ -48,16 +48,21 @@
         class="userManagement-body"
       >
         <el-table-column type="index"></el-table-column>
-        <el-table-column label="姓名" prop="name"></el-table-column>
-        <el-table-column label="邮箱" prop="email"></el-table-column>
-        <el-table-column label="电话" prop="tel"></el-table-column>
+        <el-table-column label="名称" prop="name"></el-table-column>
+        <!-- <el-table-column label="图片" prop="img"></el-table-column> -->
+        <el-table-column label="介绍" prop="introduce" class= "limitNumber" style="white-space: nowrap;"></el-table-column>
+        <!-- <el-table-column label="内容" prop="content"></el-table-column> -->
+        <el-table-column label="截止日期" prop="deadline"></el-table-column>
+        <el-table-column label="地址" prop="place"></el-table-column>
+        <el-table-column label="组织名字" prop="org_name"></el-table-column>
+        <!-- <el-table-column label="类型" prop="type"></el-table-column> -->
+        <el-table-column label="电话" prop="tel" width="125"></el-table-column>
         <el-table-column label="时长" prop="time" width="50"></el-table-column>
-        <el-table-column label="角色" prop="status"></el-table-column>
-        <!-- <el-table-column label="状态">
-          <template slot-scope="scope">
-            <el-switch v-model="scope.row.mg_state"></el-switch>
-          </template>
-        </el-table-column> -->
+        <el-table-column
+          label="状态"
+          prop="status"
+          width="70"
+        ></el-table-column>
         <el-table-column label="操作" width="120px">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
@@ -76,16 +81,6 @@
               @click="removeById(scope.row.id)"
             >
             </el-button>
-            <!-- 分配角色按钮 -->
-            <!-- <el-tooltip
-              effect="dark"
-              content="分配角色"
-              placement="top"
-              :enterable="false"
-            >
-              <el-button type="warning" icon="el-icon-setting" size="mini">
-              </el-button>
-            </el-tooltip> -->
           </template>
         </el-table-column>
       </el-table>
@@ -105,7 +100,7 @@
 
     <!-- 添加用户的对话框 -->
     <el-dialog
-      title="添加用户"
+      title="创建活动"
       :visible.sync="addDialogVisible"
       width="50%"
       @close="addDialogClosed"
@@ -124,16 +119,35 @@
           <el-input v-model="addForm.img"></el-input>
         </el-form-item>
         <el-form-item label="简介" prop="introduce">
-          <el-input v-model="addForm.introduce"></el-input>
+          <el-input v-model="addForm.introduce" type="textarea"></el-input>
         </el-form-item>
         <el-form-item label="内容" prop="content">
-          <el-input v-model="addForm.content"></el-input>
+          <el-input v-model="addForm.content" type="textarea"></el-input>
         </el-form-item>
-        <el-form-item label="截止日期" prop="deadline">
+        <el-form-item label="活动时间">
+          <el-col :span="11">
+            <el-date-picker
+              v-model="addForm.deadline"
+              type="datetime"
+              placeholder="选择日期时间"
+              align="right"
+              :picker-options="pickerOptions"
+            >
+            </el-date-picker>
+          </el-col>
+        </el-form-item>
+        <!-- <el-form-item label="截止日期" prop="deadline">
           <el-input v-model="addForm.deadline"></el-input>
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="地址" prop="place">
-          <el-input v-model="addForm.place"></el-input>
+          <el-cascader
+            size="large"
+            :options="options"
+            v-model="selectedOptions"
+            @change="handleChange"
+          >
+          </el-cascader>
+          <!-- <el-input v-model="addForm.place"></el-input> -->
         </el-form-item>
         <el-form-item label="手机" prop="tel">
           <el-input v-model="addForm.tel"></el-input>
@@ -147,7 +161,7 @@
         <el-form-item label="类型" prop="type">
           <el-input v-model="addForm.type"></el-input>
         </el-form-item>
-        <el-form-item label="权限">
+        <el-form-item label="状态">
           <el-radio-group v-model="addForm.status">
             <el-radio label="招募中"></el-radio>
             <el-radio label="已结束"></el-radio>
@@ -158,7 +172,7 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="submitAddForm(addForm)"
-          >确 定</el-button
+          >立即创建</el-button
         >
       </span>
     </el-dialog>
@@ -177,26 +191,59 @@
         ref="addFormRef"
         label-width="80px"
       >
-        <el-form-item label="用户名" prop="name">
+        <el-form-item label="活动名称" prop="name">
           <el-input v-model="editForm.name"></el-input>
         </el-form-item>
-        <el-form-item label="邮箱" prop="email">
-          <el-input v-model="editForm.email"></el-input>
+        <el-form-item label="图片" prop="img">
+          <el-input v-model="editForm.img"></el-input>
+        </el-form-item>
+        <el-form-item label="简介" prop="introduce">
+          <el-input v-model="editForm.introduce" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item label="内容" prop="content">
+          <el-input v-model="editForm.content" type="textarea"></el-input>
+        </el-form-item>
+        <el-form-item label="活动时间">
+          <el-col :span="11">
+            <el-date-picker
+              v-model="editForm.deadline"
+              type="datetime"
+              placeholder="选择日期时间"
+              align="right"
+              :picker-options="pickerOptions"
+            >
+            </el-date-picker>
+          </el-col>
+        </el-form-item>
+        <!-- <el-form-item label="截止日期" prop="deadline">
+          <el-input v-model="addForm.deadline"></el-input>
+        </el-form-item> -->
+        <el-form-item label="地址" prop="place">
+          <el-cascader
+            size="large"
+            :options="options"
+            v-model="selectedOptions"
+            @change="handleChange"
+          >
+          </el-cascader>
+          <!-- <el-input v-model="addForm.place"></el-input> -->
         </el-form-item>
         <el-form-item label="手机" prop="tel">
           <el-input v-model="editForm.tel"></el-input>
         </el-form-item>
-        <el-form-item label="密码" prop="password">
-          <el-input v-model="editForm.password"></el-input>
+        <el-form-item label="组织名称" prop="orgName">
+          <el-input v-model="editForm.orgName"></el-input>
         </el-form-item>
         <el-form-item label="时长" prop="time">
           <el-input v-model="editForm.time"></el-input>
         </el-form-item>
-        <el-form-item label="权限">
+        <el-form-item label="类型" prop="type">
+          <el-input v-model="editForm.type"></el-input>
+        </el-form-item>
+        <el-form-item label="状态">
           <el-radio-group v-model="editForm.status">
-            <el-radio label="volunteer">志愿者</el-radio>
-            <el-radio label="organizer">组织</el-radio>
-            <el-radio label="admin">管理员</el-radio>
+            <el-radio label="招募中"></el-radio>
+            <el-radio label="已结束"></el-radio>
           </el-radio-group>
         </el-form-item>
       </el-form>
@@ -213,8 +260,9 @@
 
 <script>
 import Api from "@/api/index";
+import { regionData, CodeToText } from "element-china-area-data";
 export default {
-  name: 'Activities',
+  name: "Activities",
   data() {
     // 验证手机号的规则
     var checkMobile = (rule, value, cb) => {
@@ -228,6 +276,36 @@ export default {
       cb(new Error("请输入合法的手机号"));
     };
     return {
+      //时间选择器
+      pickerOptions: {
+        shortcuts: [
+          {
+            text: "今天",
+            onClick(picker) {
+              picker.$emit("pick", new Date());
+            },
+          },
+          {
+            text: "昨天",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24);
+              picker.$emit("pick", date);
+            },
+          },
+          {
+            text: "一周前",
+            onClick(picker) {
+              const date = new Date();
+              date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
+              picker.$emit("pick", date);
+            },
+          },
+        ],
+      },
+      //地区选择器
+      options: regionData,
+      selectedOptions: [],
       // 获取用户列表的参数对象
       queryInfo: {
         query: "",
@@ -236,7 +314,7 @@ export default {
         // 当前每页显示多少条数据
         pagesize: 5,
       },
-      activitylist: [],
+      activityList: [],
       total: 0,
       // 控制添加用户对话框的显示与隐藏
       addDialogVisible: false,
@@ -246,13 +324,13 @@ export default {
         name: "",
         img: "",
         introduce: "",
-        content: '',
-        deadline: '',
-        place: '',
+        content: "",
+        deadline: "",
+        place: "",
         tel: "17888888888",
-        orgName: '',
+        orgName: "",
         time: "2",
-        type: '',
+        type: "",
         status: "",
       },
       editForm: {
@@ -260,13 +338,13 @@ export default {
         name: "",
         img: "",
         introduce: "",
-        content: '',
-        deadline: '',
-        place: '',
+        content: "",
+        deadline: "",
+        place: "",
         tel: "17888888888",
-        orgName: '',
+        orgName: "",
         time: "2",
-        type: '',
+        type: "",
         status: "",
       },
       // 添加表单的验证规则对象
@@ -274,31 +352,21 @@ export default {
         name: [
           {
             required: true,
-            message: "请输入用户名",
-            trigger: "blur",
-          },
-          {
-            min: 2,
-            max: 10,
-            message: "用户名的长度在3~10个字符之间",
+            message: "请输入活动名称",
             trigger: "blur",
           },
         ],
         img: [
           {
             required: false,
-            message: "请输入密码",
+            message: "请上传图片",
             trigger: "blur",
           },
         ],
         introduce: [
           {
             required: true,
-            message: "请输入邮箱",
-            trigger: "blur",
-          },
-          {
-            validator: checkEmail,
+            message: "请输入活动介绍",
             trigger: "blur",
           },
         ],
@@ -338,23 +406,32 @@ export default {
       },
     };
   },
-  computed: {
-  },
+  computed: {},
   created() {
-    this.getUserList();
+    this.getActivityList();
   },
   methods: {
-    async findUser() {
+    handleChange() {
+      var loc = "";
+      for (let i = 0; i < this.selectedOptions.length; i++) {
+        loc += CodeToText[this.selectedOptions[i]];
+      }
+      // alert(loc);
+      this.addForm.place = loc;
+      this.editForm.place = loc;
+    },
+    async findActivity() {
       let flag = false;
-      for (let item of this.userlist) {
-        if (item.email === this.queryInfo.query) {
-          this.userlist = [item];
+      for (let item of this.activityList) {
+        if (item.name === this.queryInfo.query) {
+          // console.log(item)
+          this.activityList = [item];
           this.total = 1;
           flag = true;
         }
       }
       if (!this.queryInfo.query) {
-        this.getUserList();
+        this.getActivityList();
       } else {
         if (flag) {
           this.$message({
@@ -369,14 +446,14 @@ export default {
         }
       }
     },
-    async getUserList() {
-      const { data: res } = await Api.getUserList();
-      this.userlist = res.userList;
+    async getActivityList() {
+      const { data: res } = await Api.getActivityList();
+      this.activityList = res.activities;
       this.total = res.count;
     },
     async submitAddForm(addForm) {
       try {
-        const response = await Api.register(addForm);
+        const response = await Api.createActivity(addForm);
         if (response.data.code !== 200) {
           this.$message({
             showClose: true,
@@ -386,7 +463,7 @@ export default {
           });
         } else {
           this.$message({
-            message: "成功添加一位新用户",
+            message: "成功创建活动",
             type: "success",
           });
         }
@@ -402,24 +479,23 @@ export default {
         } else {
           this.$message({
             showClose: true,
-            message: "添加失败，请稍后重试",
+            message: "创建失败，请稍后重试",
             type: "error",
             center: true,
           });
         }
       }
-      this.getUserList();
+      this.getActivityList();
     },
     // 监听 pagesize 改变的事件
     handleSizeChange(newSize) {
-      // console.log(newSize)
       this.queryInfo.pagesize = newSize;
-      this.getUserList();
+      this.getActivityList();
     },
     // 监听 页码值 改变的事件
     handleCurrentChange(newPage) {
       this.queryInfo.pagenum = newPage;
-      this.getUserList();
+      this.getActivityList();
     },
     // 监听添加用户对话框的关闭事件
     addDialogClosed() {
@@ -432,7 +508,7 @@ export default {
     },
     async updateById() {
       try {
-        const response = await Api.updateUser(this.editForm);
+        const response = await Api.updateActivity(this.editForm);
         if (response.data.code !== 200) {
           this.$message({
             showClose: true,
@@ -464,11 +540,11 @@ export default {
           });
         }
       }
-      this.getUserList();
+      this.getActivityList();
     },
     async removeById(id) {
       const confirmResult = await this.$confirm(
-        "此操作将永久删除该用户, 是否继续?",
+        "此操作将永久删除该活动, 是否继续?",
         "提示",
         {
           confirmButtonText: "确定",
@@ -480,14 +556,14 @@ export default {
       if (confirmResult !== "confirm") {
         return this.$message.info("已经取消删除！");
       }
-      const res = await Api.deleteUser(id);
+      const res = await Api.deleteActivity(id); 
 
       if (res.data.code !== 200) {
         return this.$message.error("删除失败！");
       } else {
         this.$message.success("删除成功！");
       }
-      this.getUserList();
+      this.getActivityList();
     },
   },
 };

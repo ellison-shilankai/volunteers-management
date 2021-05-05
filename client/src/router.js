@@ -9,7 +9,8 @@ import News from '@/views/news'
 import NewsContent from '@/views/news/content'
 import Home from '@/views/home/Home.vue'
 import Welcome from '@/views/home/Welcome.vue'
-import Users from '@/views/home/user/Users.vue'
+import Users from '@/views/home/user'
+import Activities from '@/views/home/activities'
 // import Roles from '@/components/role/Roles.vue'
 // import GoodsCate from '@/components/goods/GoodsCate.vue'
 
@@ -82,7 +83,7 @@ export default new Router({
         },
         { 
           path: '/home/activities', 
-          component: Users ,
+          component: Activities ,
           meta: {
             keepAlive: false
           }

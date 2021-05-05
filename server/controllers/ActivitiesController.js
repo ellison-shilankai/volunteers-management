@@ -58,6 +58,7 @@ module.exports = {
         }
       )
       res.status(200).send({
+        code: 200,
         message: '数据删除成功'
       })
     } catch (error) {
@@ -74,11 +75,12 @@ module.exports = {
         req.body,
         {
           where: {
-            id: req.params.id
+            id: req.body.id
           }
         }
       )
       res.status(200).send({
+        code: 200,
         message: '数据更新成功'
       })
     } catch (error) {

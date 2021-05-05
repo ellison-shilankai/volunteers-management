@@ -30,7 +30,7 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         isEmail: true
       }
-    },
+    }, 
     tel: {
       type: DataTypes.STRING,
     },
