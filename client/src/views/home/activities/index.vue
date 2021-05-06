@@ -50,9 +50,9 @@
         <el-table-column type="index"></el-table-column>
         <el-table-column label="名称" prop="name"></el-table-column>
         <!-- <el-table-column label="图片" prop="img"></el-table-column> -->
-        <el-table-column label="介绍" prop="introduce" class= "limitNumber" style="white-space: nowrap;"></el-table-column>
+        <el-table-column label="介绍" prop="introduce" class= "limitNumber"></el-table-column>
         <!-- <el-table-column label="内容" prop="content"></el-table-column> -->
-        <el-table-column label="截止日期" prop="deadline"></el-table-column>
+        <el-table-column label="截止日期" prop="deadline" :formatter="formatDate"></el-table-column>
         <el-table-column label="地址" prop="place"></el-table-column>
         <el-table-column label="组织名字" prop="org_name"></el-table-column>
         <!-- <el-table-column label="类型" prop="type"></el-table-column> -->
@@ -90,7 +90,7 @@
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
         :current-page="queryInfo.pagenum"
-        :page-sizes="[1, 2, 5, 10]"
+        :page-sizes="[1, 2, 4, 10]"
         :page-size="queryInfo.pagesize"
         layout="total, sizes, prev, pager, next, jumper"
         :total="total"
@@ -171,7 +171,7 @@
       <!-- 底部区域 -->
       <span slot="footer" class="dialog-footer">
         <el-button @click="addDialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="submitAddForm(addForm)"
+        <el-button type="primary" @click="submitAddForm()"
           >立即创建</el-button
         >
       </span>
@@ -238,7 +238,7 @@
           <el-input v-model="editForm.time"></el-input>
         </el-form-item>
         <el-form-item label="类型" prop="type">
-          <el-input v-model="editForm.type"></el-input>
+          <el-input v-model="editForm.type"></el-input> 
         </el-form-item>
         <el-form-item label="状态">
           <el-radio-group v-model="editForm.status">
@@ -312,7 +312,7 @@ export default {
         // 当前的页数
         pagenum: 1,
         // 当前每页显示多少条数据
-        pagesize: 5,
+        pagesize: 4,
       },
       activityList: [],
       total: 0,
@@ -411,6 +411,15 @@ export default {
     this.getActivityList();
   },
   methods: {
+     formatDate(row, column) {
+      // 获取单元格数据
+      let data = row[column.property]
+      if(data == null) {
+          return null
+      }
+      let dt = new Date(data)
+      return dt.getFullYear() + '-' + (dt.getMonth() + 1) + '-' + dt.getDate() + ' ' + dt.getHours() + ':' + dt.getMinutes()
+    },
     handleChange() {
       var loc = "";
       for (let i = 0; i < this.selectedOptions.length; i++) {
@@ -451,9 +460,9 @@ export default {
       this.activityList = res.activities;
       this.total = res.count;
     },
-    async submitAddForm(addForm) {
+    async submitAddForm() {
       try {
-        const response = await Api.createActivity(addForm);
+        const response = await Api.createActivity(this.addForm);
         if (response.data.code !== 200) {
           this.$message({
             showClose: true,

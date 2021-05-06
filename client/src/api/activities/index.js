@@ -4,9 +4,6 @@ export default {
   createActivity (data) {
     return request.post('/activities', data)
   },
-  login (data) {
-    return request.post('/activities/login', data)
-  },
   getActivityList (data) {
     return request.get('/activities', data)
   },

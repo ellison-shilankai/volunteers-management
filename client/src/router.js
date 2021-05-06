@@ -11,6 +11,7 @@ import Home from '@/views/home/Home.vue'
 import Welcome from '@/views/home/Welcome.vue'
 import Users from '@/views/home/user'
 import Activities from '@/views/home/activities'
+import Organizes from '@/views/home/organize'
 // import Roles from '@/components/role/Roles.vue'
 // import GoodsCate from '@/components/goods/GoodsCate.vue'
 
@@ -75,7 +76,7 @@ export default new Router({
           }
         },
         { 
-          path: '/users', 
+          path: '/home/users', 
           component: Users ,
           meta: {
             keepAlive: false
@@ -89,8 +90,8 @@ export default new Router({
           }
         },
         { 
-          path: '/org', 
-          component: Users ,
+          path: '/home/org', 
+          component: Organizes ,
           meta: {
             keepAlive: false
           }

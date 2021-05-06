@@ -24,14 +24,14 @@ module.exports = {
   },
   
   async find(req, res) {
-    const org = await Org.findAll()
+    const orgList = await Org.findAll()
     // const SumInfo = await News.findAll({ offset: 4, limit: 4 })
     const {count} = await Org.findAndCountAll()
     try {
-      if(org){
+      if(orgList){
         res.status(201).send({
           code: 200,
-          org,
+          orgList,
           count
         })
       }else {
@@ -58,6 +58,7 @@ module.exports = {
         }
       )
       res.status(200).send({
+        code: 200,
         message: '数据删除成功'
       })
     } catch (error) {
@@ -74,11 +75,12 @@ module.exports = {
         req.body,
         {
           where: {
-            id: req.params.id
+            id: req.body.id
           }
         }
       )
       res.status(200).send({
+        code: 200,
         message: '数据更新成功'
       })
     } catch (error) {

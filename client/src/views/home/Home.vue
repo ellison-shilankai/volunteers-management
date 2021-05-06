@@ -28,7 +28,7 @@
                 <i class="el-icon-user"></i>
                 <span slot="title">用户管理</span>
               </template>
-              <el-menu-item class="pull-left-20" index="1-1" @click="toDestination('/users')">用户列表</el-menu-item>
+              <el-menu-item class="pull-left-20" index="1-1" @click="toDestination('/home/users')">用户列表</el-menu-item>
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">
@@ -37,10 +37,13 @@
               </template>
               <el-menu-item class="pull-left-20" index="2-1" @click="toDestination('/home/activities')">活动列表</el-menu-item>
             </el-submenu>
-            <el-menu-item index="3">
-              <i class="el-icon-document"></i>
-              <span slot="title">组织管理</span>
-            </el-menu-item>
+            <el-submenu index="3">
+              <template slot="title">
+                <i class="el-icon-document"></i>
+                <span slot="title">组织管理</span>
+              </template>
+              <el-menu-item class="pull-left-20" index="3-1" @click="toDestination('/home/org')">组织列表</el-menu-item>
+            </el-submenu>
             <el-menu-item index="4">
               <i class="el-icon-message"></i>
               <span slot="title">资讯管理</span>
@@ -62,7 +65,7 @@ export default {
   name: "Home",
   data() {
     return {
-      isCollapse: true,
+      isCollapse: false,
     };
   },
   methods: {
