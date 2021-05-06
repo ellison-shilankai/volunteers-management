@@ -44,10 +44,13 @@
               </template>
               <el-menu-item class="pull-left-20" index="3-1" @click="toDestination('/home/org')">组织列表</el-menu-item>
             </el-submenu>
-            <el-menu-item index="4">
-              <i class="el-icon-message"></i>
-              <span slot="title">资讯管理</span>
-            </el-menu-item>
+            <el-submenu index="4">
+              <template slot="title">
+                <i class="el-icon-message"></i>
+                <span slot="title">资讯管理</span>
+              </template>
+              <el-menu-item class="pull-left-20" index="4-1" @click="toDestination('/home/news')">资讯列表</el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-aside>
         <!-- 右侧内容主体 -->

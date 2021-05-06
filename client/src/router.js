@@ -12,8 +12,8 @@ import Welcome from '@/views/home/Welcome.vue'
 import Users from '@/views/home/user'
 import Activities from '@/views/home/activities'
 import Organizes from '@/views/home/organize'
-// import Roles from '@/components/role/Roles.vue'
-// import GoodsCate from '@/components/goods/GoodsCate.vue'
+import HomeNews from '@/views/home/news'
+
 
 
 Vue.use(Router)
@@ -92,6 +92,13 @@ export default new Router({
         { 
           path: '/home/org', 
           component: Organizes ,
+          meta: {
+            keepAlive: false
+          }
+        },
+        { 
+          path: '/home/news', 
+          component: HomeNews ,
           meta: {
             keepAlive: false
           }

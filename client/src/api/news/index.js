@@ -11,10 +11,10 @@ export default {
   getAllNew (data) {
     return request.get('/news', data)
   },
-  deleteNew (data) {
-    return request.delete('/news/:id', data)
+  deleteNew (id) {
+    return request.delete(`/news/${id}`)
   },
   updateNew (data) {
     return request.put('/news/:id', data)
   }
-}
+} 
