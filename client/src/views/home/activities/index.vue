@@ -315,6 +315,7 @@ export default {
         pagesize: 4,
       },
       activityList: [],
+      findActivityList: [],
       total: 0,
       // 控制添加用户对话框的显示与隐藏
       addDialogVisible: false,
@@ -434,11 +435,12 @@ export default {
       for (let item of this.activityList) {
         if (item.name === this.queryInfo.query) {
           // console.log(item)
-          this.activityList = [item];
-          this.total = 1;
+          this.findActivityList.push(item);
+          this.total++;
           flag = true;
         }
       }
+      this.activityList = this.findActivityList
       if (!this.queryInfo.query) {
         this.getActivityList();
       } else {
