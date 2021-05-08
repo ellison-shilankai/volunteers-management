@@ -49,12 +49,16 @@
       >
         <el-table-column type="index"></el-table-column>
         <el-table-column label="名称" prop="name"></el-table-column>
-        <!-- <el-table-column label="图片" prop="img"></el-table-column> -->
+        <el-table-column label="图片" prop="img">
+          <template slot-scope="scope">
+            <img :src="scope.row.img" width="80" height="80" />
+          </template>
+        </el-table-column>
         <el-table-column label="介绍" prop="introduce"></el-table-column>
         <!-- <el-table-column label="内容" prop="content"></el-table-column> -->
         <el-table-column label="截止日期" prop="deadline" :formatter="formatDate"></el-table-column>
         <el-table-column label="地址" prop="place"></el-table-column>
-        <el-table-column label="组织名字" prop="org_name"></el-table-column>
+        <el-table-column label="组织名字" prop="orgName"></el-table-column>
         <!-- <el-table-column label="类型" prop="type"></el-table-column> -->
         <el-table-column label="电话" prop="tel" width="125"></el-table-column>
         <el-table-column label="时长" prop="time" width="50"></el-table-column>
@@ -320,18 +324,18 @@ export default {
       // 控制添加用户对话框的显示与隐藏
       addDialogVisible: false,
       editDialogVisible: false,
-      // 添加用户的表单数据
+      // 添加活动的表单数据
       addForm: {
-        name: "",
-        img: "",
+        name: "志愿先锋行",
+        img: "http://image.zyh365.com/vms/2021/21//162035407447288884a15b6284edcbb34147140d4aa4e?imageView2/2/w/400/h/270",
         introduce: "",
-        content: "",
+        content: "于浙江大学紫金港校区进行反诈宣传，主要以发放宣传单页，播放反诈视频，推广反诈码的工作为主。",
         deadline: "",
         place: "",
         tel: "17888888888",
-        orgName: "",
+        orgName: "蒋村街道蝶园社区团支部",
         time: "2",
-        type: "",
+        type: "社区服务",
         status: "",
       },
       editForm: {
@@ -406,13 +410,13 @@ export default {
         ],
       },
     };
-  },
+  }, 
   computed: {},
   created() {
     this.getActivityList();
   },
   methods: {
-     formatDate(row, column) {
+    formatDate(row, column) {
       // 获取单元格数据
       let data = row[column.property]
       if(data == null) {

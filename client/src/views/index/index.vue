@@ -10,8 +10,9 @@
             <img :src='item.url' alt />
           </el-carousel-item>
         </el-carousel>
-        
+        <e-activity class="e-activity"></e-activity>
       </el-main>
+      
     </el-container>
     
   </div>
@@ -19,7 +20,9 @@
 
 <script>
 // import { mapState } from 'vuex';
+import eActivity from "@/components/activities/e-activity";
 export default {
+  components: { eActivity },
   name: 'index',
   data(){
     return {

@@ -6,6 +6,7 @@ import * as getters from "./getters";
 import * as actions from "./actions";
 import mutations from "./mutations";
 import news from './modules/news';
+import activity from './modules/activity';
 
 Vue.use(Vuex);
 
@@ -23,6 +24,7 @@ export default new Vuex.Store({
   mutations,
   modules: {
     news,
+    activity
   },
   plugins: [createPersistedState()]//会自动保存创建的状态。刷新还在
 })

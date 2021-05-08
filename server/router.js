@@ -29,6 +29,7 @@ module.exports = (app) => {
   app.get('/activities', ActivitiesController.find)
   app.put('/activities/:id', ActivitiesController.update)
   app.delete('/activities/:id', ActivitiesController.delete)
+  app.get('/activities/:id', ActivitiesController.findActivityById)
 
   //资讯
   app.post('/news', NewsController.create)

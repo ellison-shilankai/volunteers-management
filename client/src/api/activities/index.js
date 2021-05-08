@@ -7,6 +7,9 @@ export default {
   getActivityList (data) {
     return request.get('/activities', data)
   },
+  getActivityById (id) {
+    return request.get(`/activities/${id}`)
+  },
   updateActivity (data) {
     return request.put('/activities/:id', data)
   },

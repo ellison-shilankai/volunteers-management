@@ -18,7 +18,7 @@
           <li
             class="header-ul-li"
             id="activity-li"
-            onClick="window.location.href='activities'"
+            onClick="window.location.href='/activities'"
           >
             活动
           </li>

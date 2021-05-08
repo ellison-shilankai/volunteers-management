@@ -22,7 +22,27 @@ module.exports = {
       })
     }
   },
-  
+  async findActivityById (req, res) {
+    try {
+      const activities = await Activities.findByPk(req.params.id)
+      if (activities) {
+        res.status(200).send({
+          code: 200,
+          activities
+        })
+      } else {
+        res.status(400).send({
+          code: 400,
+          error: '没有找到对应的数据'
+        })
+      }
+    } catch (error) {
+      res.status(500).send({
+        code: 500,
+        error: '数据查询失败'
+      })
+    }
+  },
   async find(req, res) {
     const activities = await Activities.findAll()
     // const SumInfo = await News.findAll({ offset: 4, limit: 4 })

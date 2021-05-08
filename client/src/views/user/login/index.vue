@@ -49,7 +49,7 @@
 
 <script>
 import Api from "@/api/index";
-import { mapActions } from "vuex";
+import { mapActions } from "vuex"; 
 
 export default { 
   name: "Login",

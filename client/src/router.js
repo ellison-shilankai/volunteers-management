@@ -4,6 +4,7 @@ import Login from './views/user/login/index.vue'
 import Register from './views/user/register/index.vue'
 import Index from '@/views/index'
 import Activity from '@/views/activities'
+import ActivityContent from '@/views/activities/content'
 import Organization from '@/views/org'
 import News from '@/views/news'
 import NewsContent from '@/views/news/content'
@@ -34,6 +35,13 @@ export default new Router({
       path: '/activities',
       // name: 'activity',
       component: Activity,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/activities/content',
+      component: ActivityContent,
       meta: {
         keepAlive: true
       }

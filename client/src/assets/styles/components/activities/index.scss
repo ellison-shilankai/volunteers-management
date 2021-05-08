@@ -2,17 +2,18 @@
   display: inline-flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 10px;
-  margin-right: -6px;
+  margin-left: 2px;
+  margin-right: 2px;
   margin-bottom: 20px;
-  width: 322px;
+  width: 390px;
   border: 1px solid #dcdddd;
   border-radius: 5px;
-  height: 375px;
+  height: 376px;
   -moz-border-radius: 5px;
   overflow: hidden;
   cursor: pointer;
   background-color: white;
+  text-align: center;
   &-img {
     img {
       width: 100%;
@@ -30,9 +31,9 @@
     font-weight: 400;
     font-size: 18px;
     overflow: hidden;
-    text-align: center;
   }
   &-day {
+    margin: 0 auto;
     &-content {
       float: left;
       color: #999;
@@ -44,10 +45,14 @@
     }
   }
   &-other {
+    margin-top: 6px;
     &-city {
-      i {
-
-      }
+      color: #999;
+      font-size: 14px;
     }
+  }
+
+  &-pagination {
+    text-align: center;
   }
 }
