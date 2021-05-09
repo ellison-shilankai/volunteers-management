@@ -47,7 +47,27 @@ module.exports = {
       })
     }
   },
-
+  async findOrgById (req, res) {
+    try {
+      const orgList = await Org.findByPk(req.params.id)
+      if (orgList) {
+        res.status(200).send({
+          code: 200,
+          orgList
+        })
+      } else {
+        res.status(400).send({
+          code: 400,
+          error: '没有找到对应的数据'
+        })
+      }
+    } catch (error) {
+      res.status(500).send({
+        code: 500,
+        error: '数据查询失败'
+      })
+    }
+  },
   async delete(req, res) {
     try {
       await Org.destroy(
@@ -88,7 +108,7 @@ module.exports = {
         code: 500,
         error: '数据更新失败'
       })
-    } 
+    }  
   },
 
 

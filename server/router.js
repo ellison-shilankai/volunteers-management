@@ -23,6 +23,7 @@ module.exports = (app) => {
   app.get('/org', OrgController.find)
   app.put('/org/:id', OrgController.update)
   app.delete('/org/:id', OrgController.delete)
+  app.get('/org/:id', OrgController.findOrgById)
 
   //活动
   app.post('/activities', ActivitiesController.create)

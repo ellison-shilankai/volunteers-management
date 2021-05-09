@@ -6,6 +6,7 @@ import Index from '@/views/index'
 import Activity from '@/views/activities'
 import ActivityContent from '@/views/activities/content'
 import Organization from '@/views/org'
+import OrganizationContent from '@/views/org/content'
 import News from '@/views/news'
 import NewsContent from '@/views/news/content'
 import Home from '@/views/home/Home.vue'
@@ -49,6 +50,13 @@ export default new Router({
     {
       path: '/org',
       component: Organization,
+      meta: {
+        keepAlive: true
+      }
+    },
+    {
+      path: '/org/content',
+      component: OrganizationContent,
       meta: {
         keepAlive: true
       }

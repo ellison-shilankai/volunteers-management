@@ -7,6 +7,9 @@ export default {
   getOrganizeList (data) {
     return request.get('/org', data)
   },
+  getOrganizeById (id) {
+    return request.get(`/org/${id}`)
+  },
   updateOrganize (data) {
     return request.put('/org/:id', data)
   },

@@ -229,7 +229,7 @@ export default {
       addForm: {
         name: "中国计量大学",
         img:
-          "background-image:url(http://image.zyh365.com/vms/2018/27//1531985272644ce177a4c7e0848fc87632da36d216379?imageView2/2/w/100/h/100)",
+          "http://image.zyh365.com/vms/2018/27//1531985272644ce177a4c7e0848fc87632da36d216379?imageView2/2/w/100/h/100",
         introduce:
           "中国计量大学青年志愿者队伍成立于1996年，在各级团委的领导下，在杭州市志愿者协会的协助下，已经走过了22个春秋，现有注册志愿者9000余名，已成为浙江省各高校中最为悠久的志愿者队伍之一。自成立以来，一直坚持以“立足校园，服务社会”为宗旨，积极开展校内外的志愿者服务活动。",
         content:

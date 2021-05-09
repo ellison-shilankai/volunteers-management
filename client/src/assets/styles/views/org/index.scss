@@ -1,18 +1,21 @@
 .org {
   margin: 0px auto;
   width: 1190px;
+
   .search-form {
     margin: 30px auto 15px;
+
     .el-input-group {
       width: 32%;
     }
   }
-  
+
   .org-list {
     margin-left: -10px;
     margin-top: 30px;
     width: 1200px;
     font-size: 0px;
+
     &-item {
       display: inline-block;
       margin-left: 10px;
@@ -31,15 +34,19 @@
         width: 248px;
         height: 88px;
         border-bottom: 1px solid #dcdddd;
+
         &-img {
-          float: left;
-          width: 88px;
-          height: 88px;
-          border-radius: 88px;
-          -moz-border-radius: 88px;
-          background-size: cover;
-          background-position: center;
+          img {
+            float: left;
+            width: 88px;
+            height: 88px;
+            border-radius: 88px;
+            -moz-border-radius: 88px;
+            background-size: cover;
+            background-position: center;
+          }
         }
+
         &-title {
           display: block;
           padding-left: 20px;
@@ -51,12 +58,27 @@
           overflow: hidden;
         }
       }
+
+      &-other {
+        margin-top: 10px;
+        height: 20px;
+        font-size: 14px;
+        line-height: 20px;
+        color: #999;
+        text-align: center;
+
+        i {
+          margin-right: 6px;
+        }
+      }
+
       p {
         padding-left: 108px;
         padding-top: 20px;
         font-size: 14px;
         line-height: 20px;
         color: #999;
+
         span {
           color: #5ec16b;
         }
