@@ -41,7 +41,7 @@
           <li
             class="header-ul-li"
             id="help-li"
-            onClick="window.location.href='/home'"
+            onClick="window.location.href='/details'"
           >
             个人信息页
           </li>

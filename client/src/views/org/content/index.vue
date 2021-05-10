@@ -22,7 +22,19 @@
         <p>场</p>
       </div>
       <h3 class="detail-h3">发起的活动</h3>
-      <div class="detail-item-box"></div>
+      <div class="detail-item-box">
+        <div class="img">
+          <img src="http://image.zyh365.com/162026569633201428f24db3b4067bde00032dfb2001e.jpg?imageView2/2/w/140/h/100">
+        </div>
+        <div class="detail-item-box-right">
+          <p class="time">2021年05月06日</p>
+        </div>
+        <h3>生化学院第十周学生审核盖章活动</h3>
+        <div class="detail-item-box-day">
+          <span>报名截止：</span>
+          <el-progress :percentage="50" class="progress"></el-progress>
+        </div>
+      </div>
     </div>
   </div>
 </template>

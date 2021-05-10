@@ -9,6 +9,10 @@ import Organization from '@/views/org'
 import OrganizationContent from '@/views/org/content'
 import News from '@/views/news'
 import NewsContent from '@/views/news/content'
+import Details from '@/views/details'
+import DetailsInfo from '@/views/details/info'
+import DetailsActivity from '@/views/details/activity'
+import DetailsOrg from '@/views/details/org'
 import Home from '@/views/home/Home.vue'
 import Welcome from '@/views/home/Welcome.vue'
 import Users from '@/views/home/user'
@@ -161,6 +165,36 @@ const router = new Router({
         //   }
         // },
 
+      ]
+    },
+    {
+      path: '/details',
+      name: 'Details',
+      component: Details,
+      meta: {
+        keepAlive: true
+      },
+      children: [{
+          path: '/details/info',
+          component: DetailsInfo,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
+          path: '/details/activity',
+          component: DetailsActivity,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
+          path: '/details/org',
+          component: DetailsOrg,
+          meta: {
+            keepAlive: true
+          }
+        },
       ]
     },
     //注册登录

@@ -77,5 +77,49 @@
     height: 99px;
     border: 1px solid #dcdddd;
     border-radius: 5px;
+    .img {
+      img {
+        float: left;
+        margin-right: 20px;
+        width: 140px;
+        height: 99px;
+        background-size: cover;
+        background-position: center
+      }
+    }
+    .detail-item-box-right {
+      float: right;
+      width: 130px;
+      height: 99px;
+      .time {
+        padding-top: 60px;
+        padding-right: 20px;
+        font-size: 14px;
+        text-align: right;
+        color: #999;
+      }
+    }
+    h3 {
+      padding: 17px 0px;
+      font-size: 18px;
+      font-weight: 400;
+    }
+    .detail-item-box-day {
+      margin: 0px 10px;
+      span {
+        float: left;
+        color: #999;
+        font-size: 14px;
+      }
+      .progress {
+        float: left;
+        margin: 5px 10px;
+        width: 216px;
+        height: 14px;
+        border-radius: 10px;
+        -moz-border-radius: 10px;
+        overflow: hidden;
+      }
+    }
   }
 }
