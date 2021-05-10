@@ -1,9 +1,9 @@
-const { UserAct } = require('../models')
+const { UserOrg } = require('../models')
 
 module.exports = {
   async create(req, res) {
     try {
-      const info = await UserAct.create(req.body) 
+      const info = await UserOrg.create(req.body) 
       res.status(201).send({
         code: 200,
         info,
@@ -42,8 +42,8 @@ module.exports = {
     //   }]
     // })
     // const SumInfo = await News.findAll({ offset: 4, limit: 4 })
-    const info = await UserAct.findAll()
-    const {count} = await UserAct.findAndCountAll()
+    const info = await UserOrg.findAll()
+    const {count} = await UserOrg.findAndCountAll()
     try {
       if(info){
         res.status(201).send({
@@ -87,7 +87,7 @@ module.exports = {
 
   async update (req, res) {
     try {
-      await UserAct.update(
+      await UserOrg.update(
         req.body,
         {
           where: {

@@ -3,7 +3,7 @@
     <div class="org-content-info">
       <div class="box-img"><img :src="orgList.img" /></div>
       <h3>{{ orgList.name }}</h3>
-      <el-button type="success" class="box-join">加入该组织</el-button>
+      <el-button type="success" class="box-join" @click="joinOrg">加入该组织</el-button>
     </div>
     <div class="org-content-right">
       <div class="three hour">
@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       orgList: {},
+      userOrg: []
     };
   },
   computed: {},
@@ -44,8 +45,38 @@ export default {
     async getOrganize() {
       let { data: res } = await Api.getOrganizeById(this.$route.query.id);
       this.orgList = res.orgList;
-      console.log(this.orgList);
     },
+    async joinOrg() {
+      let userId = this.$store.state.user.id
+      let orgId = this.orgList.id
+      let { data: res } =  await Api.getUserOrg()
+      let flag = true
+      this.userOrg = res.info
+      console.log(orgId)
+      for (let item of this.userOrg){
+        if(userId === item.userId && item.orgId === orgId){
+          flag = false
+          break;
+        }
+      }
+      if(flag) {
+        let { data: res1 } = await Api.createUserOrg({
+          userId,
+          orgId
+        })
+        if(res1.code === 200) {
+          this.$message({
+              message: "加入成功",
+              type: "success",
+          });
+        }
+      }else {
+        this.$message({
+          message: "不要重复加入",
+          type: "error",
+        });
+      }
+    }
   },
 };
 </script>

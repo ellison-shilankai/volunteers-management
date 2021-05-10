@@ -23,6 +23,7 @@
             @close="handleClose"
             :collapse="isCollapse"
           >
+            
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-user"></i>
@@ -37,6 +38,8 @@
               </template>
               <el-menu-item class="pull-left-20" index="2-1" @click="toDestination('/home/activities')">活动列表</el-menu-item>
             </el-submenu>
+            
+            <template v-if="this.$store.state.user.status == 'admin'">
             <el-submenu index="3">
               <template slot="title">
                 <i class="el-icon-document"></i>
@@ -51,6 +54,7 @@
               </template>
               <el-menu-item class="pull-left-20" index="4-1" @click="toDestination('/home/news')">资讯列表</el-menu-item>
             </el-submenu>
+            </template>
           </el-menu>
         </el-aside>
         <!-- 右侧内容主体 -->

@@ -15,16 +15,58 @@ import Users from '@/views/home/user'
 import Activities from '@/views/home/activities'
 import Organizes from '@/views/home/organize'
 import HomeNews from '@/views/home/news'
+import store from '@/store';
 
 
 
 Vue.use(Router)
+const userRule = {
+  path: '/home/users',
+  component: Users,
+  meta: {
+    keepAlive: false
+  }
+};
+const activityRule = {
+  path: '/home/activities',
+  component: Activities,
+  meta: {
+    keepAlive: false
+  }
+};
 
-export default new Router({
+
+const orgRule = {
+  path: '/home/org',
+  component: Organizes,
+  meta: {
+    keepAlive: false
+  }
+};
+const newsRule = {
+  path: '/home/news',
+  component: HomeNews,
+  meta: {
+    keepAlive: false
+  }
+};
+const ruleMapping = {
+  'admin': [
+    userRule,
+    activityRule,
+    orgRule,
+    newsRule,
+  ],
+  'organizer': [
+    userRule,
+    activityRule,
+  ],
+  'volunteer': []
+};
+const router = new Router({
   mode: 'history',
   base: process.env.BASE_URL,
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'index',
       component: Index,
@@ -83,43 +125,42 @@ export default new Router({
       meta: {
         keepAlive: false
       },
-      children: [
-        { 
-          path: '/welcome', 
-          component: Welcome ,
+      children: [{
+          path: '/welcome',
+          component: Welcome,
           meta: {
             keepAlive: false
           }
         },
-        { 
-          path: '/home/users', 
-          component: Users ,
-          meta: {
-            keepAlive: false
-          }
-        },
-        { 
-          path: '/home/activities', 
-          component: Activities ,
-          meta: {
-            keepAlive: false
-          }
-        },
-        { 
-          path: '/home/org', 
-          component: Organizes ,
-          meta: {
-            keepAlive: false
-          }
-        },
-        { 
-          path: '/home/news', 
-          component: HomeNews ,
-          meta: {
-            keepAlive: false
-          }
-        },
-        
+        // {
+        //   path: '/home/users',
+        //   component: Users,
+        //   meta: {
+        //     keepAlive: false
+        //   }
+        // },
+        // {
+        //   path: '/home/activities',
+        //   component: Activities,
+        //   meta: {
+        //     keepAlive: false
+        //   }
+        // },
+        // {
+        //   path: '/home/org',
+        //   component: Organizes,
+        //   meta: {
+        //     keepAlive: false
+        //   }
+        // },
+        // {
+        //   path: '/home/news',
+        //   component: HomeNews,
+        //   meta: {
+        //     keepAlive: false
+        //   }
+        // },
+
       ]
     },
     //注册登录
@@ -143,3 +184,26 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if (to.path === '/users/login' || to.path === '/users/register') {
+    next();
+  } else {
+    const token = sessionStorage.getItem('token');
+    if (!token) {
+      next('/users/login');
+    } else {
+      next();
+    }
+  }
+});
+export function initDynamicRoutes() {
+  const currentRoutes = router.options.routes;
+  const right = store.state.user.status;
+  const temp = ruleMapping[right];
+  temp.forEach(item => {
+    currentRoutes[7].children.push(item);
+  })
+  router.options.routes = currentRoutes;
+  router.addRoutes(currentRoutes);
+}
+export default router;

@@ -17,12 +17,16 @@
 <script>
 import header from "@/components/header";
 import footer from "@/components/footer";
+import { initDynamicRoutes } from '@/router.js';
 export default {
   name: "app",
   components: {
     headerNav: header,
     footerNav: footer,
   },
+  created () {
+    initDynamicRoutes();
+  }
 };
 </script>
 

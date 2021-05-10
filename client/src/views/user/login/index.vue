@@ -39,6 +39,7 @@
         ></el-input>
         <img :src="captchaUrl" />
       </el-form-item> -->
+      
       <el-button type="primary" class="btn-bolck" @click="submitLogin" :loading="loading"
         >登录</el-button
       >
@@ -50,7 +51,7 @@
 <script>
 import Api from "@/api/index";
 import { mapActions } from "vuex"; 
-
+import { initDynamicRoutes } from '@/router.js';
 export default { 
   name: "Login",
   data() {
@@ -99,6 +100,9 @@ export default {
             } else {
               this.$store.dispatch('setToken', response.data.token)
               this.$store.dispatch('setUser', response.data.user) 
+              sessionStorage.setItem('token', response.data.token);
+              initDynamicRoutes();
+              this.$message.success('登录成功');
               this.$router.push("/"); 
             }
             this.loading = false;

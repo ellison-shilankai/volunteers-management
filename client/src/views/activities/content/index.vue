@@ -9,7 +9,7 @@
           <el-progress :percentage="activity.percentage"></el-progress>
           <p class="box-day-content">{{ activity.deadline }}</p>
         </div> -->
-        <el-button type="success" class="box-join">报名参加</el-button>
+        <el-button type="success" class="box-join" @click="joinAct">报名参加</el-button>
         <!-- <div class="box-join"></div> -->
         <div class="box-city"><i class="el-icon-place"></i>{{ activity.place }}</div>
         <div class="box-city"><i class="el-icon-folder-add"></i>{{ activity.type }}</div>
@@ -33,6 +33,7 @@ export default {
   data() {
     return {
       activity: {},
+      userAct: [],
     };
   },
   computed: {},
@@ -43,8 +44,38 @@ export default {
     async getActivity() {
       let { data: res } = await Api.getActivityById(this.$route.query.id);
       this.activity = res.activities;
-      console.log(this.activity);
     },
+    async joinAct() {
+      let userId = this.$store.state.user.id
+      let actId = this.activity.id
+      let { data: res } =  await Api.getUserAct()
+      let flag = true
+      this.userAct = res.info
+      for (let item of this.userAct){
+        if(userId === item.userId && item.actId === actId){
+          flag = false
+          break;
+        }
+      }
+      if(flag) {
+        let { data: res1 } = await Api.createUserAct({
+          userId,
+          actId
+        })
+        if(res1.code === 200) {
+          this.$message({
+              message: "加入成功",
+              type: "success",
+          });
+        }
+      }else {
+        this.$message({
+          message: "不要重复加入",
+          type: "error",
+        });
+      }
+      
+    }
   },
 };
 </script>
