@@ -33,6 +33,11 @@
             >添加用户</el-button
           >
         </el-col>
+        <el-col :span="12" style="text-align: right">
+          <el-button type="info" @click="export2Excel()" 
+            >导出用户</el-button
+          >
+        </el-col>
       </el-row>
 
       <!-- 用户列表区域 -->
@@ -58,7 +63,7 @@
             <el-switch v-model="scope.row.mg_state"></el-switch>
           </template>
         </el-table-column> -->
-        <el-table-column label="操作" width="120px">
+        <el-table-column label="操作" width="120">
           <template slot-scope="scope">
             <!-- 修改按钮 -->
             <el-button
@@ -76,16 +81,6 @@
               @click="removeById(scope.row.id)"
             >
             </el-button>
-            <!-- 分配角色按钮 -->
-            <!-- <el-tooltip
-              effect="dark"
-              content="分配角色"
-              placement="top"
-              :enterable="false"
-            >
-              <el-button type="warning" icon="el-icon-setting" size="mini">
-              </el-button>
-            </el-tooltip> -->
           </template>
         </el-table-column>
       </el-table>
@@ -485,7 +480,20 @@ export default {
       }
       this.getUserList();
     },
-  },
+    export2Excel() {
+　　require.ensure([], () => {
+　　　　const { export_json_to_excel } = require('@/vendor/Export2Excel');
+　　　　const tHeader = ['序号', '姓名', '邮箱', '电话', '时长']; //对应表格输出的title
+　　　　const filterVal = ['id', 'name', 'email', 'tel', 'time']; // 对应表格输出的数据
+　　　　const list = this.userlist;
+　　　　const data = this.formatJson(filterVal, list);
+　　　　export_json_to_excel(tHeader, data, '志愿者名单'); //对应下载文件的名字
+　　})
+　　},
+　　formatJson(filterVal, jsonData) {
+　　　　return jsonData.map(v => filterVal.map(j => v[j]))
+　　　}
+    },
 };
 </script>
 
