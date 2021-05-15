@@ -1,6 +1,6 @@
 <template>
   <div class="details-activity">
-    <h3 class="detail-h3">完成的活动</h3>
+    <h3 class="detail-h3">待审核活动</h3>
     <div v-for="(activity,index) of findActivities" :key="index">
     
     <div class="detail-item-box">
@@ -55,16 +55,21 @@ export default {
       const { data: res } = await Api.getUserAct();
       this.userAct = res.info;
       let id = this.$store.state.user.id
+      this.findActId = []
+     
       this.userAct.forEach( item => {
-        if(item.userId === id && item.isPass === true && item.isFinish === true) {
+        if(item.userId === id && item.isPass === null) {
+          console.log(item)
           this.findActId.push(item.actId)
         }
       })
+       console.log(this.findActId)
       this.activityList.forEach( item => {
         if(this.findActId.indexOf(item.id) !== -1) {
           this.findActivities.push(item)
         }
       })
+      console.log(this.findActivities)
     }
   }
 };

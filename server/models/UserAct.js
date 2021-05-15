@@ -5,11 +5,35 @@ module.exports = (sequelize, DataTypes) => {
   Model.init({
     // 在这里定义模型属性
     userId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     actId: {
-      type: DataTypes.INTEGER
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
+    userName: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    actName: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    userEmail: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    actTime: {
+      type: DataTypes.INTEGER,
+      allowNull: false
+    },
+    isPass: {
+      type: DataTypes.BOOLEAN
+    },
+    isFinish: {
+      type: DataTypes.BOOLEAN
+    }
   },
   // 这是其他模型参数
   {

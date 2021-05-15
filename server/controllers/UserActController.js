@@ -34,7 +34,7 @@ module.exports = {
     //   console.log(res)
     // })
     // const info = await UserAct.findAll({
-    //   include:[{
+    //   include:[{ 
     //     model: User,
     //     'where': {
     //       'id': userId
@@ -91,11 +91,12 @@ module.exports = {
         req.body,
         {
           where: {
-            id: req.params.id
+            id: req.body.id
           }
         }
       )
       res.status(200).send({
+        code: 200,
         message: '数据更新成功'
       })
     } catch (error) {

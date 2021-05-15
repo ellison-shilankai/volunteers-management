@@ -1,6 +1,6 @@
 import axios from 'axios';
 const request = axios.create()
-export default {
+export default { 
   createUserOrg (data) {
     return request.post('/userOrg', data)
   },

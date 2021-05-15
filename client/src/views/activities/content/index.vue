@@ -9,7 +9,10 @@
           <el-progress :percentage="activity.percentage"></el-progress>
           <p class="box-day-content">{{ activity.deadline }}</p>
         </div> -->
-        <el-button type="success" class="box-join" @click="joinAct">报名参加</el-button>
+        <template v-if="activity.status==='招募中'">
+          <el-button type="success" class="box-join" @click="joinAct" >报名参加</el-button>
+        </template>
+        <el-button v-else type="success" class="box-join" @click="joinAct" disabled>报名参加</el-button>
         <!-- <div class="box-join"></div> -->
         <div class="box-city"><i class="el-icon-place"></i>{{ activity.place }}</div>
         <div class="box-city"><i class="el-icon-folder-add"></i>{{ activity.type }}</div>
@@ -46,25 +49,28 @@ export default {
       this.activity = res.activities;
     },
     async joinAct() {
-      let userId = this.$store.state.user.id
-      let actId = this.activity.id
+      let userAct = {
+        userId: this.$store.state.user.id,
+        actId: this.activity.id,
+        userName: this.$store.state.user.name,
+        actName: this.activity.name,
+        userEmail: this.$store.state.user.email,
+        actTime: this.activity.time
+      }
       let { data: res } =  await Api.getUserAct()
       let flag = true
       this.userAct = res.info
       for (let item of this.userAct){
-        if(userId === item.userId && item.actId === actId){
+        if(userAct.userId === item.userId && item.actId === userAct.actId){
           flag = false
           break;
         }
       }
       if(flag) {
-        let { data: res1 } = await Api.createUserAct({
-          userId,
-          actId
-        })
+        let { data: res1 } = await Api.createUserAct(userAct)
         if(res1.code === 200) {
           this.$message({
-              message: "加入成功",
+              message: "申请成功",
               type: "success",
           });
         }

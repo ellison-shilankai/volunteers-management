@@ -9,17 +9,29 @@
             @open="handleOpen"
             @close="handleClose"
           >
-            <el-menu-item index="1">
+            <el-menu-item index="1" @click="toDestination('/details/info')" >
               <i class="el-icon-menu"></i>
-              <span slot="title" @click="toDestination('/details/info')">个人信息</span>
+              <span slot="title" >个人信息</span>
             </el-menu-item>
-            <el-menu-item index="3">
+            <el-menu-item index="2">
+              <i class="el-icon-loading"></i>
+              <span slot="title" @click="toDestination('/details/activity/wait')">待审核活动</span>
+            </el-menu-item>
+            <el-menu-item index="3" @click="toDestination('/details/activity/pass')">
               <i class="el-icon-document"></i>
-              <span slot="title" @click="toDestination('/details/activity')">申请的活动</span>
+              <span slot="title" >通过的活动</span>
             </el-menu-item>
-            <el-menu-item index="4">
+            <el-menu-item index="4" @click="toDestination('/details/activity/refuse')">
+              <i class="el-icon-document-delete"></i>
+              <span slot="title" >拒绝的活动</span>
+            </el-menu-item>
+            <el-menu-item index="5"  @click="toDestination('/details/activity')">
+              <i class="el-icon-document-checked"></i>
+              <span slot="title">完成的活动</span>
+            </el-menu-item>
+            <el-menu-item index="6" @click="toDestination('/details/org')">
               <i class="el-icon-setting"></i>
-              <span slot="title" @click="toDestination('/details/org')">加入的组织</span>
+              <span slot="title" >加入的组织</span>
             </el-menu-item>
           </el-menu>
         </el-col>
@@ -37,11 +49,6 @@
 export default {
   data() {
     return {
-      dataForm: {
-        nickName: "超级管理员",
-        phone: "173567777777",
-        homeUrl: "http://www.baidu.com",
-      },
     };
   },
   methods: {
@@ -65,6 +72,7 @@ export default {
   margin: 0px auto;
   width: 1190px;
   padding-top: 40px;
+  padding-bottom: 40px;
   overflow: hidden;
   .details-left {
     padding-left: 100px;
@@ -73,7 +81,7 @@ export default {
   }
   .details-right {
     padding: 0;
-    margin-left: -170px;
+    margin-left: -150px;
     overflow: hidden;
   }
 }

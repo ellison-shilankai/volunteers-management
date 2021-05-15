@@ -8,7 +8,7 @@
           <!-- <i class="iconfont iconhuodongguanli"></i> -->
           <span>志愿者管理系统</span>
         </div>
-        <el-button type="info" @click="logout">user退出</el-button>
+        <el-button type="info" @click="logout">{{ this.$store.state.user.name }}退出</el-button>
       </el-header>
 
       <el-container class="left-aside">
@@ -37,6 +37,10 @@
                 <span slot="title">活动管理</span>
               </template>
               <el-menu-item class="pull-left-20" index="2-1" @click="toDestination('/home/activities')">活动列表</el-menu-item>
+              <template v-if="this.$store.state.user.status == 'organizer'">
+              <el-menu-item class="pull-left-20" index="2-2" @click="toDestination('/home/activities/join')">申请列表</el-menu-item>
+              <el-menu-item class="pull-left-20" index="2-3" @click="toDestination('/home/activities/finish')">签到列表</el-menu-item>
+               </template>
             </el-submenu>
             
             <template v-if="this.$store.state.user.status == 'admin'">

@@ -3,7 +3,9 @@
     <div class="org-content-info">
       <div class="box-img"><img :src="orgList.img" /></div>
       <h3>{{ orgList.name }}</h3>
-      <el-button type="success" class="box-join" @click="joinOrg">加入该组织</el-button>
+      <el-button type="success" class="box-join" @click="joinOrg"
+        >加入该组织</el-button
+      >
     </div>
     <div class="org-content-right">
       <div class="three hour">
@@ -22,14 +24,16 @@
         <p>场</p>
       </div>
       <h3 class="detail-h3">发起的活动</h3>
-      <div class="detail-item-box">
+      <div class="detail-item-box" v-for="(act, index) in orgAct" :key="index" @click ="skipContent(act.id)">
         <div class="img">
-          <img src="http://image.zyh365.com/162026569633201428f24db3b4067bde00032dfb2001e.jpg?imageView2/2/w/140/h/100">
+          <img
+            :src="act.img"
+          />
         </div>
         <div class="detail-item-box-right">
-          <p class="time">2021年05月06日</p>
+          <p class="time">活动时长:{{ act.time }}</p>
         </div>
-        <h3>生化学院第十周学生审核盖章活动</h3>
+        <h3>{{ act.name }}</h3>
         <div class="detail-item-box-day">
           <span>报名截止：</span>
           <el-progress :percentage="50" class="progress"></el-progress>
@@ -41,15 +45,28 @@
  
 <script>
 import Api from "@/api/index";
+import { mapState } from "vuex";
 export default {
   name: "org-content",
   data() {
     return {
       orgList: {},
-      userOrg: []
+      userOrg: [],
+      orgAct: [], //组织创建的志愿活动
     };
   },
-  computed: {},
+  computed: {
+    ...mapState({
+      activityList: (state) => state.activity.activityList,
+    }),
+  },
+  watch: {
+    $route() {
+      if (this.$route.query.id) {
+        this.getOrganize();
+      }
+    },
+  },
   created() {
     this.getOrganize();
   },
@@ -57,37 +74,53 @@ export default {
     async getOrganize() {
       let { data: res } = await Api.getOrganizeById(this.$route.query.id);
       this.orgList = res.orgList;
+      this.orgAct = [];
+      this.activityList.forEach((item) => {
+        if (item.orgName === this.orgList.name && item.status === "招募中") {
+          this.orgAct.push(item);
+        }
+      });
     },
     async joinOrg() {
-      let userId = this.$store.state.user.id
-      let orgId = this.orgList.id
-      let { data: res } =  await Api.getUserOrg()
-      let flag = true
-      this.userOrg = res.info
-      console.log(orgId)
-      for (let item of this.userOrg){
-        if(userId === item.userId && item.orgId === orgId){
-          flag = false
+      let userId = this.$store.state.user.id;
+      let orgId = this.orgList.id;
+      let orgName = this.orgList.name;
+      let { data: res } = await Api.getUserOrg();
+      let flag = true;
+      this.userOrg = res.info;
+      for (let item of this.userOrg) {
+        if (userId === item.userId && item.orgId === orgId) {
+          flag = false;
           break;
         }
       }
-      if(flag) {
+      if (flag) {
         let { data: res1 } = await Api.createUserOrg({
           userId,
-          orgId
-        })
-        if(res1.code === 200) {
+          orgId,
+          orgName,
+        });
+        if (res1.code === 200) {
           this.$message({
-              message: "加入成功",
-              type: "success",
+            message: "加入成功",
+            type: "success",
           });
         }
-      }else {
+      } else {
         this.$message({
           message: "不要重复加入",
           type: "error",
         });
       }
+    },
+    skipContent(id) {
+      const { href } = this.$router.resolve({
+        path: `/activities/content`,
+        query: {
+          id: id,
+        }
+      });
+      window.open(href, '_blank');
     }
   },
 };

@@ -60,7 +60,7 @@ export default {
       captchaUrl: "",
       loading: false,
       LoginForm: {
-        email: "1067168009@qq.com",
+        email: "@qq.com",
         password: "12345678",
         status: ''
         // code: "",

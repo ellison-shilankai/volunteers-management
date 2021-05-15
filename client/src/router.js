@@ -12,11 +12,16 @@ import NewsContent from '@/views/news/content'
 import Details from '@/views/details'
 import DetailsInfo from '@/views/details/info'
 import DetailsActivity from '@/views/details/activity'
+import PassActivity from '@/views/details/activity/pass'
+import WaitActivity from '@/views/details/activity/wait'
+import RefuseActivity from '@/views/details/activity/refuse'
 import DetailsOrg from '@/views/details/org'
 import Home from '@/views/home/Home.vue'
 import Welcome from '@/views/home/Welcome.vue'
 import Users from '@/views/home/user'
 import Activities from '@/views/home/activities'
+import JoinActivities from '@/views/home/activities/join'
+import FinishActivities from '@/views/home/activities/finish'
 import Organizes from '@/views/home/organize'
 import HomeNews from '@/views/home/news'
 import store from '@/store';
@@ -38,8 +43,20 @@ const activityRule = {
     keepAlive: false
   }
 };
-
-
+const activityJoinRule = {
+  path: '/home/activities/join',
+  component: JoinActivities,
+  meta: {
+    keepAlive: false
+  }
+};
+const activityFinishRule = {
+  path: '/home/activities/finish',
+  component: FinishActivities,
+  meta: {
+    keepAlive: false
+  }
+};
 const orgRule = {
   path: '/home/org',
   component: Organizes,
@@ -64,6 +81,8 @@ const ruleMapping = {
   'organizer': [
     userRule,
     activityRule,
+    activityJoinRule,
+    activityFinishRule,
   ],
   'volunteer': []
 };
@@ -184,6 +203,27 @@ const router = new Router({
         {
           path: '/details/activity',
           component: DetailsActivity,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
+          path: '/details/activity/pass',
+          component: PassActivity,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
+          path: '/details/activity/refuse',
+          component: RefuseActivity,
+          meta: {
+            keepAlive: true
+          }
+        },
+        {
+          path: '/details/activity/wait',
+          component: WaitActivity,
           meta: {
             keepAlive: true
           }

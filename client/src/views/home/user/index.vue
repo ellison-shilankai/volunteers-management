@@ -34,9 +34,7 @@
           >
         </el-col>
         <el-col :span="12" style="text-align: right">
-          <el-button type="info" @click="export2Excel()" 
-            >导出用户</el-button
-          >
+          <el-button type="info" @click="export2Excel()">导出用户</el-button>
         </el-col>
       </el-row>
 
@@ -196,7 +194,7 @@
 import { mapState } from "vuex";
 import Api from "@/api/index";
 export default {
-  name: 'Users',
+  name: "Users",
   data() {
     // 验证邮箱的规则
     var checkEmail = (rule, value, cb) => {
@@ -329,7 +327,10 @@ export default {
     };
   },
   computed: {
-    ...mapState(["user", "isUserLogin"]),
+    ...mapState({
+      status: (state) => state.user.status,
+      name: (state) => state.user.name,
+    }),
   },
   created() {
     this.getUserList();
@@ -361,9 +362,26 @@ export default {
       }
     },
     async getUserList() {
+      let temp = []
       const { data: res } = await Api.getUserList();
-      this.userlist = res.userList;
-      this.total = res.count;
+      temp = res.userList;
+      let userId = []
+      if(this.status === "organizer") {
+        const { data: res } = await Api.getUserOrg()
+        const name = this.name
+        res.info.forEach((item) => {
+          if(item.orgName === name){
+             userId.push(item.userId)
+          }
+        })
+        this.userlist = temp.filter((item) => {
+          return userId.indexOf(item.id) !== -1
+        })
+        this.total = this.userlist.length
+      } else {
+        this.userlist = res.userList;
+        this.total = res.count;
+      }
     },
     async submitAddForm(addForm) {
       try {
@@ -481,19 +499,19 @@ export default {
       this.getUserList();
     },
     export2Excel() {
-　　require.ensure([], () => {
-　　　　const { export_json_to_excel } = require('@/vendor/Export2Excel');
-　　　　const tHeader = ['序号', '姓名', '邮箱', '电话', '时长']; //对应表格输出的title
-　　　　const filterVal = ['id', 'name', 'email', 'tel', 'time']; // 对应表格输出的数据
-　　　　const list = this.userlist;
-　　　　const data = this.formatJson(filterVal, list);
-　　　　export_json_to_excel(tHeader, data, '志愿者名单'); //对应下载文件的名字
-　　})
-　　},
-　　formatJson(filterVal, jsonData) {
-　　　　return jsonData.map(v => filterVal.map(j => v[j]))
-　　　}
+      require.ensure([], () => {
+        const { export_json_to_excel } = require("@/vendor/Export2Excel");
+        const tHeader = ["序号", "姓名", "邮箱", "电话", "时长"]; //对应表格输出的title
+        const filterVal = ["id", "name", "email", "tel", "time"]; // 对应表格输出的数据
+        const list = this.userlist;
+        const data = this.formatJson(filterVal, list);
+        export_json_to_excel(tHeader, data, "志愿者名单"); //对应下载文件的名字
+      });
     },
+    formatJson(filterVal, jsonData) {
+      return jsonData.map((v) => filterVal.map((j) => v[j]));
+    },
+  },
 };
 </script>
 

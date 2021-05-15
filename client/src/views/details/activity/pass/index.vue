@@ -1,6 +1,6 @@
 <template>
   <div class="details-activity">
-    <h3 class="detail-h3">完成的活动</h3>
+    <h3 class="detail-h3">通过的活动</h3>
     <div v-for="(activity,index) of findActivities" :key="index">
     
     <div class="detail-item-box">
@@ -56,7 +56,7 @@ export default {
       this.userAct = res.info;
       let id = this.$store.state.user.id
       this.userAct.forEach( item => {
-        if(item.userId === id && item.isPass === true && item.isFinish === true) {
+        if(item.userId === id && item.isPass === true) {
           this.findActId.push(item.actId)
         }
       })

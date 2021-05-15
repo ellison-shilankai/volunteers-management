@@ -50,7 +50,7 @@
           <li
             class="header-ul-li"
             id="help-li"
-            onClick="window.location.href='/home'"
+            @click='skipToHome'
           >
             后台管理
           </li>
@@ -69,7 +69,7 @@
           </template>
           <template v-else>
             <li class="header-ul-li header-user-downlist">
-              <a style="color: " @click="logout">退出</a>
+              <a style="color: " @click="logout">{{ this.$store.state.user.name }},退出</a>
             </li>
           </template>
         </ul>
@@ -89,6 +89,12 @@ export default {
       // 删除vuex中的数据，就是让当前页面进行刷新
       window.location.reload();
     },
+    skipToHome() {
+      const { href } = this.$router.resolve({
+        path: '/home'
+      });
+      window.open(href, '_blank');
+    }
   },
 };
 </script>

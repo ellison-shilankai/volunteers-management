@@ -10,6 +10,9 @@ module.exports = (sequelize, DataTypes) => {
     orgId: {
       type: DataTypes.INTEGER
     },
+    orgName: {
+      type: DataTypes.INTEGER
+    }
   },
   // 这是其他模型参数
   {

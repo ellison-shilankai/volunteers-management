@@ -48,7 +48,11 @@
         class="userManagement-body"
       >
         <el-table-column type="index"></el-table-column>
-        <el-table-column label="名称" prop="name"></el-table-column>
+        <el-table-column label="活动名称" prop="name" >
+          <template slot-scope="scope">
+            <div @click="skipToContent(scope.row.id)">{{ scope.row.name }}</div>
+          </template>
+        </el-table-column>
         <el-table-column label="图片" prop="img">
           <template slot-scope="scope">
             <img :src="scope.row.img" width="80" height="80" />
@@ -265,6 +269,7 @@
 <script>
 import Api from "@/api/index";
 import { regionData, CodeToText } from "element-china-area-data";
+import { mapState, mapActions } from "vuex";
 export default {
   name: "Activities",
   data() {
@@ -411,11 +416,17 @@ export default {
       },
     };
   }, 
-  computed: {},
+  computed: {
+    ...mapState({
+      status: (state) => state.user.status,
+      name: (state) => state.user.name,
+    }),
+  },
   created() {
     this.getActivityList();
   },
   methods: {
+    ...mapActions("activity", ["getOrgAct"]),
     formatDate(row, column) {
       // 获取单元格数据
       let data = row[column.property]
@@ -436,6 +447,8 @@ export default {
     },
     async findActivity() {
       let flag = false;
+      this.findActivityList = []
+      this.total = 0
       for (let item of this.activityList) {
         if (item.name === this.queryInfo.query) {
           // console.log(item)
@@ -463,8 +476,19 @@ export default {
     },
     async getActivityList() {
       const { data: res } = await Api.getActivityList();
-      this.activityList = res.activities;
-      this.total = res.count;
+      this.activityList = []
+      if(this.status === "organizer") {
+        const name = this.name
+        res.activities.forEach((item) => {
+          if(item.orgName === name){
+            this.activityList.push(item) 
+          }
+        })
+      } else {
+        this.activityList =  res.activities
+      }
+      this.$store.dispatch('activity/getOrgAct', this.activityList)
+      this.total = this.activityList.length
     },
     async submitAddForm() {
       try {
@@ -580,7 +604,17 @@ export default {
       }
       this.getActivityList();
     },
+    skipToContent(id) {
+      const { href } = this.$router.resolve({
+        path: `/home/activities/join`,
+        query: {
+          id: id
+        }
+      })
+      window.open(href, '_blank');
+    }
   },
+ 
 };
 </script>
 

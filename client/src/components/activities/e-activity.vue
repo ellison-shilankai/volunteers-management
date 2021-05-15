@@ -137,12 +137,13 @@ export default {
       this.getActivityList();
     },
     skipContent(id) {
-      this.$router.push({
-        path: "/activities/content"  ,
+      const { href } = this.$router.resolve({
+        path: `/activities/content`,
         query: {
-          id: id
+          id: id,
         }
-      })
+      });
+      window.open(href, '_blank');
     }
   },
   beforeDestroy() {

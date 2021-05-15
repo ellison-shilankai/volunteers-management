@@ -94,7 +94,6 @@ export default {
   },
   methods: {
     register() {
-      console.log(this.registerForm.status)
       this.$refs["registerForm"].validate(async (valid) => {
         if (valid) {
           this.loading = true;
@@ -113,6 +112,12 @@ export default {
                 center: true
               });
             } else {
+              this.$message({
+                showClose: true,
+                message: '注册成功',
+                type: 'success',
+                center: true
+              });
               this.$store.dispatch('setToken', response.data.token)
               this.$router.push("/users/login");
             }
