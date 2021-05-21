@@ -1,6 +1,5 @@
 <template>
   <el-header class="header" height="93px">
-    <!-- <div class="header" style="background-color: ; color: "> -->
     <nav>
       <img
         class="header-logo"
@@ -36,22 +35,15 @@
         >
           资讯
         </li>
-        <!-- <li class="header-ul-li" id="timeshow-li" onClick="window.location.href='/web/site/timeshow'">时长公示</li> -->
-        <template v-if="$store.state.user.status === 'volunteer'">
-          <li
-            class="header-ul-li"
-            id="help-li"
-            onClick="window.location.href='/details'"
-          >
-            个人信息页
-          </li>
-        </template>
-        <template v-else>
-          <li
-            class="header-ul-li"
-            id="help-li"
-            @click='skipToHome'
-          >
+        <li
+          class="header-ul-li"
+          id="help-li"
+          onClick="window.location.href='/details'"
+        >
+          个人信息页
+        </li>
+        <template v-if="$store.state.user.status != 'volunteer'">
+          <li class="header-ul-li" id="help-li" @click="skipToHome">
             后台管理
           </li>
         </template>
@@ -69,13 +61,14 @@
           </template>
           <template v-else>
             <li class="header-ul-li header-user-downlist">
-              <a style="color: " @click="logout">{{ this.$store.state.user.name }},退出</a>
+              <a style="color: " @click="logout"
+                >{{ this.$store.state.user.name }},退出</a
+              >
             </li>
           </template>
         </ul>
       </ul>
     </nav>
-    <!-- </div> -->
   </el-header>
 </template>
 
@@ -91,10 +84,10 @@ export default {
     },
     skipToHome() {
       const { href } = this.$router.resolve({
-        path: '/home'
+        path: "/home",
       });
-      window.open(href, '_blank');
-    }
+      window.open(href, "_blank");
+    },
   },
 };
 </script>

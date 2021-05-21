@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.INTEGER
     },
     orgName: {
-      type: DataTypes.INTEGER
+      type: DataTypes.STRING
     }
   },
   // 这是其他模型参数

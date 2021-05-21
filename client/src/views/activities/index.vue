@@ -3,7 +3,7 @@
     <div class="search-form">
       <div>
         <el-input
-          placeholder="请输入内容"
+          placeholder="请输入活动名称"
           v-model="activity.name"
           class="input-with-select"
         >
@@ -63,9 +63,16 @@ export default {
       this.data.total = 0;
       for (let item of this.activityList) {
         if (this.activity.status === "不限状态") {
-          this.data.findActivityList = this.activityList;
-          this.data.total = this.activityList.length;
-          flag = true
+          if (this.activity.name && item.name === this.activity.name) {
+            this.data.findActivityList.push(item);
+            this.data.total++;
+            flag = true;
+          }else if(!this.activity.name) {
+            this.data.findActivityList = this.activityList;
+            this.data.total = this.activityList.length;
+            flag = true
+            break;
+          }
         } else {
           if (this.activity.name && item.status === this.activity.status && item.name === this.activity.name) {
             this.data.findActivityList.push(item);

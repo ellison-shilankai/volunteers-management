@@ -54,7 +54,7 @@
           class=""
         ></el-table-column>
         <el-table-column label="介绍" prop="introduce"></el-table-column>
-        <el-table-column label="内容" prop="content"></el-table-column>
+        <el-table-column label="总场数" prop="content"></el-table-column>
         <el-table-column label="图片" prop="img">
           <template slot-scope="scope">
             <img :src="scope.row.img" width="80" height="80" />
