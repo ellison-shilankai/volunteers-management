@@ -4,25 +4,20 @@
       <div class="activities-content-left-box">
         <div class="box-img"><img :src="activity.img" /></div>
         <h3>{{ activity.name }}</h3>
-        <!-- <div class="box-day">
-          <span class="box-day-content">报名截止：</span>
-          <el-progress :percentage="activity.percentage"></el-progress>
-          <p class="box-day-content">{{ activity.deadline }}</p>
-        </div> -->
         <template v-if="activity.status==='招募中'">
           <el-button type="success" class="box-join" @click="joinAct" >报名参加</el-button>
         </template>
         <el-button v-else type="success" class="box-join" @click="joinAct" disabled>报名参加</el-button>
         <!-- <div class="box-join"></div> -->
-        <div class="box-city"><i class="el-icon-place"></i>{{ activity.place }}</div>
-        <div class="box-city"><i class="el-icon-folder-add"></i>{{ activity.type }}</div>
-        <div class="box-city"><i class="el-icon-document"></i>{{ activity.orgName }}</div>
-        <div class="box-city"><i class="el-icon-phone"></i>{{ activity.tel }}</div>
+        <div class="box-city"><i class="el-icon-place"></i>活动地址：{{ activity.place }}</div>
+        <div class="box-city"><i class="el-icon-folder-add"></i>活动类型：{{ activity.type }}</div>
+        <div class="box-city"><i class="el-icon-document"></i>发起组织：{{ activity.orgName }}</div>
+        <div class="box-city"><i class="el-icon-phone"></i>联系电话：{{ activity.tel }}</div>
       </div>
     </div>
     <div class="activities-content-right">
       <h2>活动介绍</h2>
-      <div class="activities-content-right-info">{{ activity.introduce }}</div>
+      <div class="activities-content-right-info" v-html="activity.introduce"></div>
       <h2>活动内容</h2>
       <div class="activities-content-right-info">{{ activity.content }}</div>
     </div>

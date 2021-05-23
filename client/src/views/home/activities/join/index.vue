@@ -157,7 +157,7 @@ export default {
         }
         //从志愿者参与的活动
         res.info.forEach((item) => {
-          if(actId.indexOf(item.actId) !== -1 && item.isPass !== true){
+          if(actId.indexOf(item.actId) !== -1){
             this.activityList.push(item) 
           }
         })

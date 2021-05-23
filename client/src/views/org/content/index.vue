@@ -85,6 +85,7 @@ export default {
       let userId = this.$store.state.user.id;
       let orgId = this.orgList.id;
       let orgName = this.orgList.name;
+      let totalPeople = this.orgList.totalPeople+1;
       let { data: res } = await Api.getUserOrg();
       let flag = true;
       this.userOrg = res.info;
@@ -95,16 +96,22 @@ export default {
         }
       }
       if (flag) {
+        await Api.updateOrganize({
+          id: orgId,
+          totalPeople
+        })
         let { data: res1 } = await Api.createUserOrg({
           userId,
           orgId,
-          orgName,
+          orgName
         });
+        
         if (res1.code === 200) {
           this.$message({
             message: "加入成功",
             type: "success",
           });
+          this.getOrganize();
         }
       } else {
         this.$message({

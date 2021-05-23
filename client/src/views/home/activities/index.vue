@@ -513,6 +513,20 @@ export default {
             message: "成功创建活动",
             type: "success",
           });
+          let { data: res } = await Api.getOrganizeList();
+          let orgList = res.orgList;
+          let content;
+          let orgId
+          orgList.forEach((item) =>{
+            if(item.name === this.name ) {
+              content = parseInt(item.content) + 1
+              orgId = item.id
+            }
+          })
+          await Api.updateOrganize({
+            id: orgId,
+            content
+          })
         }
         this.addDialogVisible = false;
       } catch (error) {

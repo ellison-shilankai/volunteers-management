@@ -109,6 +109,7 @@ export default {
   computed: {
     ...mapState({
       status: (state) => state.user.status,
+      name: (state) => state.user.name,
       orgAct: (state) => state.activity.orgAct
     })
   },
@@ -177,14 +178,16 @@ export default {
     async updateData(row, flag) {
       try {
         const { data: res} = await Api.findUser(row.userId)
-        let time = flag ? res.user.time + row.actTime : res.user.time - row.actTime
+
+        let time = flag ? row.actTime : 0 - row.actTime
         const response = await Api.updateUserAct({
           id: row.id,
           isFinish: flag === 1,
         })
+        // 志愿时长增加或减少
         const response2 = await Api.updateUser({
           id: row.userId,
-          time: time,
+          time: time + res.user.time,
         })
         if (response.data.code !== 200 && response2.data.code !== 200) {
           this.$message({
@@ -198,6 +201,22 @@ export default {
             message: "操作成功",
             type: "success",
           });
+          // 操作成够增加或减少该组织的志愿时长
+          let { data: res } = await Api.getOrganizeList();
+          let orgList = res.orgList;
+          let totalTime;
+          let orgId
+          orgList.forEach((item) =>{
+            if(item.name === this.name ) {
+              console.log(item.totalTime)
+              totalTime = parseFloat(item.totalTime) + time
+              orgId = item.id
+            }
+          })
+          await Api.updateOrganize({
+            id: orgId,
+            totalTime
+          })
         }
         this.editDialogVisible = false;
       } catch (error) {
