@@ -37,6 +37,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     time: {
      type: DataTypes.DECIMAL,
+    },
+    totalPeople: {
+      type: DataTypes.BIGINT,
+      defaultValue: 10
     }
   },
   // 这是其他模型参数

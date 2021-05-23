@@ -157,6 +157,9 @@
           </el-cascader>
           <!-- <el-input v-model="addForm.place"></el-input> -->
         </el-form-item>
+        <el-form-item label="活动人数" prop="tel">
+          <el-input v-model="addForm.totalPeople"></el-input>
+        </el-form-item>
         <el-form-item label="手机" prop="tel">
           <el-input v-model="addForm.tel"></el-input>
         </el-form-item>
@@ -235,6 +238,9 @@
           >
           </el-cascader>
           <!-- <el-input v-model="addForm.place"></el-input> -->
+        </el-form-item>
+        <el-form-item label="活动人数" prop="totalPeople">
+          <el-input v-model="editForm.totalPeople"></el-input>
         </el-form-item>
         <el-form-item label="手机" prop="tel">
           <el-input v-model="editForm.tel"></el-input>
@@ -337,6 +343,7 @@ export default {
         content: "于浙江大学紫金港校区进行反诈宣传，主要以发放宣传单页，播放反诈视频，推广反诈码的工作为主。",
         deadline: "",
         place: "",
+        totalPeople: '',
         tel: "17888888888",
         orgName: "蒋村街道蝶园社区团支部",
         time: "2",
@@ -351,6 +358,7 @@ export default {
         content: "",
         deadline: "",
         place: "",
+        totalPeople: '',
         tel: "17888888888",
         orgName: "",
         time: "2",

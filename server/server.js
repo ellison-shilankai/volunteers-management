@@ -9,13 +9,6 @@ app.use(morgan('combined'))
 
 require('./router')(app)
 
-// app.post('/users', (req, res) => {
-//   console.log(req.body)
-//   res.send({
-//     code: 200,
-//     data: req.body
-//   })
-// })
 // 自动同步所有模型
 sequelize.sync()
   .then(() => {

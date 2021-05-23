@@ -12,13 +12,15 @@
       <div class="activity-item-img"><img :src="activity.img" /></div>
       <div class="activity-item-title">{{ activity.name }}</div>
       <div class="activity-item-day">
-        <span class="activity-item-day-content">报名截止：</span>
+        <span class="activity-item-day-content">截止人数：</span>
         <el-progress :percentage="activity.percentage" ></el-progress>
-        <p class="activity-item-day-content">{{ activity.deadline }}</p>
       </div>
+
       <div class="activity-item-other">
+        
         <div class="activity-item-other-city"><i class="el-icon-place"></i>{{ activity.place }}</div>
-        <div class="activity-item-other-join"><i></i></div>
+        <div class="activity-item-other-time"><i class="el-icon-time"></i>{{ activity.deadline }}</div>
+        <div class="activity-item-other-join"><i class="el-icon-user"></i>{{ activity.joinPeople }}</div>
       </div>
     </div>
     <!-- 分页区域 -->
@@ -48,7 +50,6 @@ export default {
         // 当前每页显示多少条数据
         pagesize: 6,
       },
-      percentage: 20,
       activityList: [],
       findActivityList: [],
       total: 0,
@@ -94,31 +95,42 @@ export default {
         ":" +
         dt.getMinutes()
       );
-    },
+    }, 
     async getActivityList() {
       const { data: res } = await Api.getActivityList();
+      const { data: res1 } = await Api.getUserAct();
       this.activityList = res.activities;
       this.total = res.count;
       for (let item of this.activityList) {
         item.deadline = this.getDeadline(new Date(item.deadline), this.nowTime);
-        item.percentage = this.percentage
+        item.joinPeople = this.getJoinNumber(item.id, res1.info) 
+        item.percentage = parseInt((item.joinPeople/item.totalPeople)*100)
       }
       this.$store.dispatch('activity/getActivity', this.activityList)
+    },
+    // 获取报名人数
+    getJoinNumber(id, info) {
+      let actId = []
+      let userAct = []
+      actId.push(id)
+      info.forEach((item) => {
+        if(actId.indexOf(item.actId) !== -1){
+          userAct.push(item) 
+        }
+      })
+      let len = userAct.length
+      return len
     },
     getDeadline(firstDate, secondDate) {
       let deadline = firstDate.getTime();
       let currentTime = secondDate.getTime();
       if(deadline <= currentTime) {
-        this.percentage = 100
         return "已结束"
       }else {
         let diff = Math.abs(deadline - currentTime)
         let result = parseInt(diff / (1000 * 60 * 60 * 24));
         if(result === 0) {
           result = 1
-          this.percentage = 90
-        }else {
-          this.percentage = 50
         }
         return result + "天"
       }

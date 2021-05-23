@@ -23,7 +23,7 @@
             </el-menu-item>
             <el-menu-item index="4" @click="toDestination('/details/activity/refuse')">
               <i class="el-icon-document-delete"></i>
-              <span slot="title" >拒绝的活动</span>
+              <span slot="title" >未通过的活动</span>
             </el-menu-item>
             <el-menu-item index="5"  @click="toDestination('/details/activity')">
               <i class="el-icon-document-checked"></i>

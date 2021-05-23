@@ -148,7 +148,7 @@ export default {
         }else {
           this.orgAct.forEach((item) => {
             actId.push(item.id)
-          })
+          }) 
         }
         res.info.forEach((item) => {
           if(actId.indexOf(item.actId) !== -1 && item.isPass === true){
