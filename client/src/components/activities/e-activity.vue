@@ -118,7 +118,7 @@ export default {
           userAct.push(item) 
         }
       })
-      let len = userAct.length
+      let len = userAct.length ? userAct.length : 0
       return len
     },
     getDeadline(firstDate, secondDate) {

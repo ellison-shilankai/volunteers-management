@@ -6,9 +6,11 @@
         <div>
           <!-- <img src="../assets/heima.png" alt /> -->
           <!-- <i class="iconfont iconhuodongguanli"></i> -->
-          <span>志愿者管理系统</span>
+          <span>志愿者活动管理网站后台</span>
         </div>
-        <el-button type="info" @click="logout">{{ this.$store.state.user.name }}退出</el-button>
+        <el-button type="info" @click="logout"
+          >{{ this.$store.state.user.name }}退出</el-button
+        >
       </el-header>
 
       <el-container class="left-aside">
@@ -23,42 +25,83 @@
             @close="handleClose"
             :collapse="isCollapse"
           >
-            
             <el-submenu index="1">
               <template slot="title">
                 <i class="el-icon-user"></i>
                 <span slot="title">用户管理</span>
               </template>
-              <el-menu-item class="pull-left-20" index="1-1" @click="toDestination('/home/users')">用户列表</el-menu-item>
+              <el-menu-item
+                class="pull-left-20"
+                index="1-1"
+                @click="toDestination('/home/users')"
+                >用户列表</el-menu-item
+              >
             </el-submenu>
             <el-submenu index="2">
               <template slot="title">
                 <i class="el-icon-menu"></i>
                 <span slot="title">活动管理</span>
               </template>
-              <el-menu-item class="pull-left-20" index="2-1" @click="toDestination('/home/activities')">活动列表</el-menu-item>
+              <el-menu-item
+                class="pull-left-20"
+                index="2-1"
+                @click="toDestination('/home/activities')"
+                >活动列表</el-menu-item
+              >
               <template v-if="this.$store.state.user.status == 'organizer'">
-              <el-menu-item class="pull-left-20" index="2-2" @click="toDestination('/home/activities/join')">申请列表</el-menu-item>
-              <el-menu-item class="pull-left-20" index="2-3" @click="toDestination('/home/activities/finish')">签到列表</el-menu-item>
-               </template>
+                <el-menu-item
+                  class="pull-left-20"
+                  index="2-2"
+                  @click="toDestination('/home/activities/join')"
+                  >申请列表</el-menu-item
+                >
+                <el-menu-item
+                  class="pull-left-20"
+                  index="2-3"
+                  @click="toDestination('/home/activities/finish')"
+                  >签到列表</el-menu-item
+                >
+              </template>
             </el-submenu>
-            
+
             <template v-if="this.$store.state.user.status == 'admin'">
-            <el-submenu index="3">
-              <template slot="title">
-                <i class="el-icon-document"></i>
-                <span slot="title">组织管理</span>
-              </template>
-              <el-menu-item class="pull-left-20" index="3-1" @click="toDestination('/home/org')">组织列表</el-menu-item>
-            </el-submenu>
-            <el-submenu index="4">
-              <template slot="title">
-                <i class="el-icon-message"></i>
-                <span slot="title">资讯管理</span>
-              </template>
-              <el-menu-item class="pull-left-20" index="4-1" @click="toDestination('/home/news')">资讯列表</el-menu-item>
-            </el-submenu>
+              <el-submenu index="3">
+                <template slot="title">
+                  <i class="el-icon-document"></i>
+                  <span slot="title">组织管理</span>
+                </template>
+                <el-menu-item
+                  class="pull-left-20"
+                  index="3-1"
+                  @click="toDestination('/home/org')"
+                  >组织列表</el-menu-item
+                >
+              </el-submenu>
+              <el-submenu index="4">
+                <template slot="title">
+                  <i class="el-icon-message"></i>
+                  <span slot="title">资讯管理</span>
+                </template>
+                <el-menu-item
+                  class="pull-left-20"
+                  index="4-1"
+                  @click="toDestination('/home/news')"
+                  >资讯列表</el-menu-item
+                >
+              </el-submenu>
             </template>
+            <el-submenu index="5">
+              <template slot="title">
+                <i class="el-icon-collection"></i>
+                <span slot="title">数据分析</span>
+              </template>
+              <el-menu-item
+                class="pull-left-20"
+                index="4-1"
+                @click="toDestination('/home/analysis')"
+                >数据列表</el-menu-item
+              >
+            </el-submenu>
           </el-menu>
         </el-aside>
         <!-- 右侧内容主体 -->
@@ -98,8 +141,8 @@ export default {
       this.isCollapse = !this.isCollapse;
     },
     toDestination(path) {
-      this.$router.push(path)
-    }
+      this.$router.push(path);
+    },
   },
 };
 </script>

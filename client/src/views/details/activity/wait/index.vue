@@ -10,13 +10,13 @@
         />
       </div>
       <div class="detail-item-box-right">
-        <p class="type">{{ activity.type }}</p>
+        <p class="type">活动时长:{{ activity.time }}</p>
         <p class="time">{{ activity.place }}</p>
       </div>
       <h3  @click="toDestination(activity.id)">{{ activity.name }}</h3>
       <div class="detail-item-box-day">
-        <span>报名截止：</span>
-        <el-progress :percentage="50" class="progress"></el-progress>
+        <span>人数：</span>
+        <el-progress :percentage="activity.percentage" class="progress"></el-progress>
       </div>
     </div>
     </div>
@@ -25,17 +25,21 @@
 
 <script>
 import Api from "@/api/index";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       userAct: [],
-      activityList: [],
       findActId: [],
       findActivities: [],
     };
   },
+  computed: {
+    ...mapState({
+      activityList: (state) => state.activity.activityList,
+    }),
+  },
   created() {
-    this.getActivityList();
     this.getActivity();
   },
   methods: {
@@ -47,10 +51,6 @@ export default {
         }
       })
     },
-    async getActivityList() {
-      const { data: res } = await Api.getActivityList();
-      this.activityList = res.activities;
-    },
     async getActivity () {
       const { data: res } = await Api.getUserAct();
       this.userAct = res.info;
@@ -59,17 +59,14 @@ export default {
      
       this.userAct.forEach( item => {
         if(item.userId === id && item.isPass === null) {
-          console.log(item)
           this.findActId.push(item.actId)
         }
       })
-       console.log(this.findActId)
       this.activityList.forEach( item => {
         if(this.findActId.indexOf(item.id) !== -1) {
           this.findActivities.push(item)
         }
       })
-      console.log(this.findActivities)
     }
   }
 };
@@ -101,7 +98,7 @@ export default {
       height: 99px;
       .type {
           float: right;
-          margin: 14px 10px;
+          margin: 14px 22px;
       }
       .time {
         padding-top: 60px;

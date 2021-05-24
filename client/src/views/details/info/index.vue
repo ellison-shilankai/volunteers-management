@@ -129,7 +129,6 @@ export default {
       const { data: res } = await Api.findUser(id);
       this.userlist = res.user;
       this.editForm = { ...this.userlist }
-      console.log(this.editForm)
     },
     async updateById() {
       try {

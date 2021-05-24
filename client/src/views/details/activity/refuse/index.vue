@@ -15,27 +15,31 @@
       </div>
       <h3  @click="toDestination(activity.id)">{{ activity.name }}</h3>
       <div class="detail-item-box-day">
-        <span>报名截止：</span>
-        <el-progress :percentage="50" class="progress"></el-progress>
+        <span>人数：</span>
+        <el-progress :percentage="activity.percentage" class="progress"></el-progress>
       </div>
     </div>
     </div>
   </div>
 </template>
-
+ 
 <script>
 import Api from "@/api/index";
+import { mapState } from "vuex";
 export default {
   data() {
     return {
       userAct: [],
-      activityList: [],
       findActId: [],
       findActivities: [],
     };
   },
+  computed: {
+    ...mapState({
+      activityList: (state) => state.activity.activityList,
+    }),
+  },
   created() {
-    this.getActivityList();
     this.getActivity();
   },
   methods: {
@@ -46,10 +50,6 @@ export default {
           id: id
         }
       })
-    },
-    async getActivityList() {
-      const { data: res } = await Api.getActivityList();
-      this.activityList = res.activities;
     },
     async getActivity () {
       const { data: res } = await Api.getUserAct();

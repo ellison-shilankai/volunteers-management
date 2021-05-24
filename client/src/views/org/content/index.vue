@@ -23,20 +23,21 @@
         <h3>{{ orgList.content }}</h3>
         <p>场</p>
       </div>
-      <h3 class="detail-h3">发起的活动</h3>
+      <h3 class="detail-h3">招募中的活动</h3>
       <div class="detail-item-box" v-for="(act, index) in orgAct" :key="index" @click ="skipContent(act.id)">
         <div class="img">
           <img
             :src="act.img"
           />
         </div>
-        <div class="detail-item-box-right">
-          <p class="time">活动时长:{{ act.time }}</p>
+        <div class="detail-item-box-right"> 
+          <p class="time">类型:{{ act.type }}</p>
+          <p class="time">地点:{{ act.place }}</p>
         </div>
         <h3>{{ act.name }}</h3>
         <div class="detail-item-box-day">
-          <span>报名截止：</span>
-          <el-progress :percentage="50" class="progress"></el-progress>
+          <span>人数：</span>
+          <el-progress :percentage="act.percentage" class="progress"></el-progress>
         </div>
       </div>
     </div>

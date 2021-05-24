@@ -18,12 +18,14 @@ import RefuseActivity from '@/views/details/activity/refuse'
 import DetailsOrg from '@/views/details/org'
 import Home from '@/views/home/Home.vue'
 import Welcome from '@/views/home/Welcome.vue'
+import NotFound from '@/views/home/NotFound.vue'
 import Users from '@/views/home/user'
 import Activities from '@/views/home/activities'
 import JoinActivities from '@/views/home/activities/join'
 import FinishActivities from '@/views/home/activities/finish'
 import Organizes from '@/views/home/organize'
 import HomeNews from '@/views/home/news'
+import Analysis from '@/views/home/analysis'
 import store from '@/store';
 
 
@@ -71,18 +73,36 @@ const newsRule = {
     keepAlive: false
   }
 };
+const analysisRule = {
+  path: '/home/analysis',
+  component: Analysis,
+  meta: {
+    keepAlive: false
+  }
+}
+const home = {
+  path: '/welcome',
+  component: Welcome,
+  meta: {
+    keepAlive: false
+  }
+};
 const ruleMapping = {
   'admin': [
+    home,
     userRule,
     activityRule,
     orgRule,
     newsRule,
+    analysisRule
   ],
   'organizer': [
+    home,
     userRule,
     activityRule,
     activityJoinRule,
     activityFinishRule,
+    analysisRule
   ],
   'volunteer': []
 };
@@ -148,13 +168,14 @@ const router = new Router({
       meta: {
         keepAlive: false
       },
-      children: [{
-          path: '/welcome',
-          component: Welcome,
-          meta: {
-            keepAlive: false
-          }
-        },
+      children: [
+        // {
+        //   path: '/welcome',
+        //   component: Welcome,
+        //   meta: {
+        //     keepAlive: false
+        //   }
+        // },
         // {
         //   path: '/home/users',
         //   component: Users,
@@ -255,6 +276,11 @@ const router = new Router({
       meta: {
         keepAlive: false
       }
+    },
+
+    {
+      path: '*',
+      component: NotFound
     }
   ]
 })

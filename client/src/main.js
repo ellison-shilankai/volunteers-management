@@ -5,6 +5,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import "@/assets/styles/main.scss";
 import router from './router'
 import store from './store/index'
+import * as echarts from 'echarts';
 
 Vue.config.productionTip = false
 Vue.use(ElementUI);
@@ -14,3 +15,4 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount('#app')
+Vue.prototype.$echarts = echarts
