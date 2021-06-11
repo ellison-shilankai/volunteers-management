@@ -60,8 +60,8 @@ export default {
       captchaUrl: "",
       loading: false,
       LoginForm: {
-        email: "@qq.com",
-        password: "12345678",
+        email: "",
+        password: "",
         status: ''
         // code: "",
       },
@@ -98,7 +98,7 @@ export default {
                 center: true
               });
             } else {
-              this.$store.dispatch('setToken', response.data.token)
+              this.$store.dispatch('setToken', response.data.token) 
               this.$store.dispatch('setUser', response.data.user) 
               sessionStorage.setItem('token', response.data.token);
               initDynamicRoutes();

@@ -14,7 +14,7 @@
                 <span class="registe-info">
                   注册时间：
                   <li class="fa fa-clock-o"></li>
-                  2020/4/10 9:40:33
+                  {{ userlist.createdAt }}
                 </span>
               </div>
               <el-divider></el-divider>
@@ -77,12 +77,6 @@
                     v-model="editForm.tel"
                   ></el-input>
                 </el-form-item>
-                <el-form-item label="邮箱" prop="email">
-                  <el-input
-                    maxlength="18"
-                    v-model="editForm.email"
-                  ></el-input>
-                </el-form-item>
                 <el-form-item label="密码" prop="password">
                   <el-input
                     maxlength="18"
@@ -91,8 +85,7 @@
                 </el-form-item>
               </el-form>
               <div slot="footer" class="dialog-footer">
-                <el-button size="mini" type="primary" @click="updateById(editForm)">提交</el-button>
-                <el-button size="mini" type="warning">关闭</el-button>
+                <el-button size="mini" type="primary" @click="updateById(editForm)">修改</el-button>
               </div>
             </div>
           </el-card>
@@ -105,6 +98,7 @@
 
 <script>
 import Api from "@/api/index"
+import { mapActions } from "vuex"; 
 export default {
   data() {
     return {
@@ -124,15 +118,18 @@ export default {
     this.getUser()
   },
   methods: {
+    ...mapActions(["setUser"]),
     async getUser() {
       let id = this.$store.state.user.id
       const { data: res } = await Api.findUser(id);
       this.userlist = res.user;
+      this.userlist.createdAt = this.formatDate(this.userlist.createdAt)
       this.editForm = { ...this.userlist }
+      this.editForm.password = ''
     },
     async updateById() {
       try {
-        const response = await Api.updateUser(this.editForm);
+        const response = await Api.updateUser(this.editForm);     
         if (response.data.code !== 200) {
           this.$message({
             showClose: true,
@@ -145,6 +142,8 @@ export default {
             message: "更新成功",
             type: "success",
           });
+          console.log(this.editForm)
+          this.$store.dispatch('setUser', this.editForm)
         }
         this.editDialogVisible = false;
       } catch (error) {
@@ -166,6 +165,25 @@ export default {
       }
       this.getUser();
     },
+    formatDate(time) {
+      // 获取单元格数据
+      let data = time;
+      if (data == null) {
+        return null;
+      }
+      let dt = new Date(data);
+      return (
+        dt.getFullYear() +
+        "-" +
+        (dt.getMonth() + 1) +
+        "-" +
+        dt.getDate() +
+        " " +
+        dt.getHours() +
+        ":" +
+        dt.getMinutes()
+      );
+    }, 
   }
 };
 </script>

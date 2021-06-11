@@ -54,9 +54,9 @@ export default {
       loading: false,
       error: "",
       registerForm: {
-        email: "1067168009@qq.com",
-        password: "12345678",
-        comparePassword: "12345678",
+        email: "",
+        password: "",
+        comparePassword: "",
         status: ''
       },
       registerRules: {

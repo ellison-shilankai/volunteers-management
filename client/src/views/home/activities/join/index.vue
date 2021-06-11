@@ -58,7 +58,7 @@
         <el-table-column label="用户邮箱" prop="userEmail"></el-table-column>
         <el-table-column label="活动时长" prop="actTime" width="120px"></el-table-column>
         <el-table-column label="审核状态" prop="isPass" width="120px" :formatter="passFormatter"></el-table-column>
-        <el-table-column label="签到" width="120px">
+        <el-table-column label="申请" width="120px">
           <template slot-scope="scope">
             <!-- 接受按钮 -->
             <el-button

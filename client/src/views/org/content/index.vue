@@ -3,8 +3,11 @@
     <div class="org-content-info">
       <div class="box-img"><img :src="orgList.img" /></div>
       <h3>{{ orgList.name }}</h3>
-      <el-button type="success" class="box-join" @click="joinOrg"
+      <el-button v-if="!this.flag" type="success" class="box-join" @click="joinOrg"
         >加入该组织</el-button
+      >
+      <el-button v-else type="info" class="box-join" @click="joinOrg"
+        >已加入</el-button
       >
     </div>
     <div class="org-content-right">
@@ -54,6 +57,7 @@ export default {
       orgList: {},
       userOrg: [],
       orgAct: [], //组织创建的志愿活动
+      flag: false, //是否已经加入该组织
     };
   },
   computed: {
@@ -81,22 +85,32 @@ export default {
           this.orgAct.push(item);
         }
       });
+      let { data: res1 } = await Api.getUserOrg();
+      let userId = this.$store.state.user.id;
+      let orgId = this.orgList.id;
+      this.userOrg = res1.info;
+      for (let item of this.userOrg) {
+        if (userId === item.userId && item.orgId === orgId) {
+          this.flag = true;
+          break;
+        }
+      }
     },
     async joinOrg() {
       let userId = this.$store.state.user.id;
       let orgId = this.orgList.id;
       let orgName = this.orgList.name;
       let totalPeople = this.orgList.totalPeople+1;
-      let { data: res } = await Api.getUserOrg();
-      let flag = true;
-      this.userOrg = res.info;
-      for (let item of this.userOrg) {
-        if (userId === item.userId && item.orgId === orgId) {
-          flag = false;
-          break;
-        }
-      }
-      if (flag) {
+      // let { data: res } = await Api.getUserOrg();
+      // let flag = true;
+      // this.userOrg = res.info;
+      // for (let item of this.userOrg) {
+      //   if (userId === item.userId && item.orgId === orgId) {
+      //     flag = false;
+      //     break;
+      //   }
+      // }
+      if (!this.flag) {
         await Api.updateOrganize({
           id: orgId,
           totalPeople

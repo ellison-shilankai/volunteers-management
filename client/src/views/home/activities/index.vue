@@ -495,7 +495,7 @@ export default {
       } else {
         this.activityList =  res.activities
       }
-      this.$store.dispatch('activity/getOrgAct', this.activityList)
+      this.$store.dispatch('activity/getOrgAct', this.activityList) 
       this.total = this.activityList.length
     },
     async submitAddForm() {

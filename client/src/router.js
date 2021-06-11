@@ -102,7 +102,6 @@ const ruleMapping = {
     activityRule,
     activityJoinRule,
     activityFinishRule,
-    analysisRule
   ],
   'volunteer': []
 };

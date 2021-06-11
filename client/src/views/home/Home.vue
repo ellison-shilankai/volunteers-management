@@ -89,19 +89,19 @@
                   >资讯列表</el-menu-item
                 >
               </el-submenu>
-            </template>
-            <el-submenu index="5">
+              <el-submenu index="5">
               <template slot="title">
                 <i class="el-icon-collection"></i>
                 <span slot="title">数据分析</span>
               </template>
               <el-menu-item
                 class="pull-left-20"
-                index="4-1"
+                index="5-1"
                 @click="toDestination('/home/analysis')"
                 >数据列表</el-menu-item
               >
             </el-submenu>
+            </template>
           </el-menu>
         </el-aside>
         <!-- 右侧内容主体 -->
